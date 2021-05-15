@@ -1,15 +1,20 @@
 import React, { Fragment } from "react";
-import { Switch, Route } from "react-router-dom";
+
 import Header from "./Header";
 import Cars from '../pages/Cars';
+
+// MARK: -- Third Party
+import { Switch, Route } from "react-router-dom";
+import CSSBaseline from "@material-ui/core/CSSBaseline";
 
 function App() {
   return (
     <Fragment>
+      <CSSBaseline />
       <Header />
       <div> 
         <Switch>
-          <Route exact path="/" components={Cars} />
+          <Route exact path="/" component={Cars} />
         </Switch>
       </div>
     </Fragment>
