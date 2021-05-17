@@ -2,7 +2,6 @@ import React, { Fragment } from "react";
 
 import CarList from "../components/CarsList";
 
-import Container from "@material-ui/core/Container";
 import Box from "@material-ui/core/Box";
 
 import { GET_CARS } from "../graphql/queries";
@@ -18,11 +17,9 @@ const Cars = () => {
 
 	return (
 		<Fragment>
-			<Container>
 			<Box my={2}>
 				<CarList cars={data.cars} />
 			</Box>
-			</Container>
 		</Fragment>
 	)
 }

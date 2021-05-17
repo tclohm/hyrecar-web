@@ -2,19 +2,17 @@ import React from "react";
 import CarCell from "./CarCell";
 
 
-import Box from "@material-ui/core/Box";
+import Grid from "@material-ui/core/Grid";
 
 const CarsList = ({ cars }) => {
 	return (
-		<Box>
+		<Grid container spacing={1}>
 			{cars.map(car => (
-				<div key={car.id}>
-					<Box>
-						<CarCell car={car} />
-					</Box>
-				</div>
+				<Grid item lg={6} sm={12} key={car.id}>
+					<CarCell car={car} />
+				</Grid>
 			))}
-		</Box>
+		</Grid>
 	)
 }
 
