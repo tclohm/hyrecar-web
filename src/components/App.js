@@ -1,7 +1,10 @@
 import React, { Fragment } from "react";
 
 import Header from "./Header";
-import Cars from '../pages/Cars';
+import Cars from "../pages/Cars";
+import Signup from "../pages/Signup";
+import Profile from "../pages/Profile";
+import ManageCars from "../pages/ManageCars";
 
 // MARK: -- Third Party
 import { Switch, Route } from "react-router-dom";
@@ -15,6 +18,9 @@ function App() {
       <div> 
         <Switch>
           <Route exact path="/" component={Cars} />
+          <Route path="/signup" component={Signup} />
+          <Route path="/profile" component={Profile} />
+          <Route path="/manage" component={ManageCars} />
         </Switch>
       </div>
     </Fragment>

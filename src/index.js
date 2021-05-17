@@ -6,6 +6,7 @@ import App from './components/App';
 // MARK: -- Third Party
 import { BrowserRouter } from "react-router-dom";
 import { ApolloProvider } from '@apollo/react-hooks';
+import { AuthProvider } from "./context/AuthContext";
 import client from './client';
 
 
@@ -13,9 +14,11 @@ import reportWebVitals from './reportWebVitals';
 
 const Root = () => (
 	<BrowserRouter>
-			<ApolloProvider client={client}>
-    			<App />
-    		</ApolloProvider>
+			<AuthProvider>
+				<ApolloProvider client={client}>
+	    			<App />
+	    		</ApolloProvider>
+    		</AuthProvider>
 	</BrowserRouter>
 )
 

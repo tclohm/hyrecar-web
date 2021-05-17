@@ -29,3 +29,21 @@ export const CARS_FIELD = gql`
 		}
 	}
 `; 
+
+export const PUBLIC_PROFILE = gql`
+	fragment PublicField on Profile {
+		id
+		firstName
+		lastName
+		avatar {
+			image {
+				location
+			}
+		}
+		rating
+		state
+		transactions {
+			id
+		}
+	}
+`;
