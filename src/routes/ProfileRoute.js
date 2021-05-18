@@ -3,20 +3,20 @@ import React, { useContext } from "react";
 import { Route, Redirect } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
-const AuthenticatedRoute = ({ children, ...rest }) => {
-	const { isAuthenticatedAndProfileCreated } = useContext(AuthContext);
+const ProfileRoute = ({ children, ...rest }) => {
+	const { isAuthenticatedButProfileNotCreated } = useContext(AuthContext);
 	return (
 		<Route
 			{...rest}
 			render={() => 
-				isAuthenticatedAndProfileCreated() ? (
+				isAuthenticatedButProfileNotCreated() ? (
 					<>{ children }</>
 				) : (
-					<Redirect to="/login" />
+					<Redirect to="/profile" />
 				)
 			}
 		></Route>
 	);
 };
 
-export default AuthenticatedRoute;
+export default ProfileRoute;

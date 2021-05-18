@@ -9,7 +9,7 @@ import { AuthContext } from "../context/AuthContext";
 const Header = () => {
 
 	const history = useHistory()
-	const { isAuthenticated } = useContext(AuthContext); 
+	const { isAuthenticatedAndProfileCreated, isAuthenticatedAndProfileNotCreated } = useContext(AuthContext); 
 
 	const handleRoute = pageURL => {
 		history.push(pageURL)
@@ -19,15 +19,18 @@ const Header = () => {
 		<Fragment>
 		<AppBar position="static">
 			<ToolBar>
-				{isAuthenticated() ? 
+				{isAuthenticatedAndProfileCreated() ? 
 					<Button>Manage Your Cars</Button>
+					:
+					isAuthenticatedAndProfileNotCreated ?
+					<></>
 					:
 					<Grid container justify="space-between">
 						<Grid item>
 							<Button variant="contained" onClick={() => handleRoute("/")}>Explore</Button>
 						</Grid>
 						<Grid item>
-							<Button onClick={() => handleRoute("/")}>Login</Button>
+							<Button onClick={() => handleRoute("/login")}>Login</Button>
 							<Button onClick={() => handleRoute("/signup")}>Signup</Button>
 						</Grid>
 					</Grid>

@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 
-export const CARS_FIELD = gql`
-	fragment CarsField on Car {
+export const EXPLORE_CARS_FIELD = gql`
+	fragment ExploreCarsFields on Car {
 		id
 		make
 		model
@@ -47,3 +47,68 @@ export const PUBLIC_PROFILE = gql`
 		}
 	}
 `;
+
+export const USER_PROFILE = gql`
+	fragment Cars on CarOwner {
+		profile {
+			user {
+				id
+			}
+		}
+		cars {
+			id
+			make
+			model
+			year
+			vin
+			condition
+			ratePerDay
+			maxMilesPerDay
+			available
+			image {
+				image {
+					filename
+					location
+				}
+			}
+		}
+	}
+`;
+
+const CARS_FIELDS = gql`
+	fragment CarsFields on Cars {
+		id
+		make
+		model
+		year
+		vin
+		condition
+		ratePerDay
+		image {
+			image {
+				location
+				filename
+			}
+		}
+	}
+`
+
+const PROFILE_IMAGE = gql`
+	fragment ProfileImageFields on ProfileImage {
+		image {
+			filename
+			mimetype
+			encoding
+			location
+		}
+	}
+`
+
+const PROFILE_FIELDS = gql`
+	fragment ProfileFields on Profile {
+		firstName
+		lastName
+		license
+		renting
+	}
+`

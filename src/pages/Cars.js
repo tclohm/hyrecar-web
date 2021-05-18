@@ -14,7 +14,7 @@ const Cars = () => {
 
 	if (loading) return <p>loading...</p>
 	if (error) return <p>ERROR</p>
-
+	if (data)
 	return (
 		<Fragment>
 			<Box my={2}>

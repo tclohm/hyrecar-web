@@ -1,6 +1,6 @@
-import React, { useState, Fragment } from "react";
-import Dropzone from "../components/Dropzone";
-import schema from "../validations/AuthSchema";
+import React, { useContext, useState, Fragment } from "react";
+import { InfoContext } from "../context/InfoContext";
+import schema from "../validations/ProfileSchema";
 import { useFormik } from 'formik';
 import Container from "@material-ui/core/Container";
 import Snackbar from "@material-ui/core/Snackbar";
@@ -11,35 +11,58 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Typography from "@material-ui/core/Typography";
 import Switch from "@material-ui/core/Switch";
 import CloseIcon from '@material-ui/icons/Close';
+
 import { useHistory } from "react-router-dom";
+
+import { ADD_PROFILE_IMAGE } from "../graphql/mutations";
+import { useMutation } from "@apollo/react-hooks";
+
+const url = "http://localhost:4000"
+
+const myImageStyle = {
+	height: "200px",
+	width: "200px",
+	borderRadius: "50%"
+}
 
 const Profile = () => {
 
 	// userId
-	const [renting, setRenting] = useState(true)
-
-	const handleSwitch = () => {
-		setRenting(!renting)
-	}
+	const { information, setInformation, handleSwitch } = useContext(InfoContext); 
 
 	const history = useHistory();
 	const [open, setOpen] = useState(false)
+	const placeholder = new File(['anon-0'], 'anon-0.jpg', { type: 'image/jpeg' })
 
 	const handleClose = () => {
 		setOpen(false)
 	}
 
+	const [addImage, image] = useMutation(ADD_PROFILE_IMAGE)
+	const [imageUploaded, setImageUploaded] = useState(false)
+
+	const handleUpload =  ({ target }) => {
+
+		const file = target.files[0]
+		const validity = target.validity
+		if (validity.valid) {
+			addImage({ variables: { file } })
+			setImageUploaded(true)
+		} else {
+			alert("Error uploading image")
+		}
+	}
+
 	const formik = useFormik({
 		initialValues: {
-			avatar: '',
-			license: '',
-			firstName: '',
-			lastName: '',
-			renting: renting,
+			license: information.license,
+			firstName: information.firstName,
+			lastName: information.lastName,
+			renting: information.renting,
 		},
 		validationSchema: schema,
 		onSubmit: (values) => {
-			renting ? history.push('/manage') : history.push('/')
+			console.log(values)
 		}
 	})
 
@@ -48,7 +71,20 @@ const Profile = () => {
 		<Container>
 		  <h1>Create your Profile</h1>
 		  <div>
-		  	<Dropzone profile={true} />
+		  	{ 
+		  		imageUploaded && image.data ? 
+		  			<>
+		  			<p>Image Uploaded!</p>
+		  			<img src={url + image.data.uploadProfileImage.location} style={myImageStyle} alt="profile" />
+		  			</>
+		  		:
+				<>
+					<img src={placeholder.name} style={myImageStyle} alt="default avatar" />
+					<p>use our placeholder image or upload your own profile picture</p>
+		  			<input type="file" accept="image/*" onChange={handleUpload} />
+		  		</>
+
+		  	}
 		  </div>
 	      <form onSubmit={formik.handleSubmit}>
 	        <TextField
@@ -85,14 +121,14 @@ const Profile = () => {
 	        	control={
 	        		<Switch
 			          name="renting"
-			          checked={renting}
+			          checked={information.renting}
 			          value={formik.values.renting}
 			          onChange={handleSwitch}
 	       			/>
 	        	}
 	        	label="Will you be renting out your car?"
 	        />
-	        <Typography display="inline">{renting ? "yes" : "no"}</Typography>
+	        <Typography display="inline">{information.renting ? "yes" : "no"}</Typography>
 	        <Button color="primary" variant="contained" fullWidth type="submit">
 	          Save Profile
 	        </Button>

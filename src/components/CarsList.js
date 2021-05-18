@@ -8,7 +8,7 @@ const CarsList = ({ cars }) => {
 	return (
 		<Grid container spacing={1}>
 			{cars.map(car => (
-				<Grid item lg={6} sm={12} key={car.id}>
+				<Grid item sm={12} key={car.id}>
 					<CarCell car={car} />
 				</Grid>
 			))}
