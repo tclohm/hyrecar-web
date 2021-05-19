@@ -1,9 +1,10 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { useFormik } from 'formik';
 import { useMutation } from "@apollo/react-hooks";
-
-import { ADD_CAR } from "../graphql/mutations";
+import { AuthContext } from "../context/AuthContext";
+import { ADD_CAR, ADD_CAR_IMAGE } from "../graphql/mutations";
+import { GET_OWNED_CARS } from "../graphql/queries";
 import schema from "../validations/CarSchema";
 
 import Container from "@material-ui/core/Container";
@@ -16,16 +17,65 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Typography from "@material-ui/core/Typography";
 import Switch from "@material-ui/core/Switch";
 
+const url = "http://localhost:4000"
+
+const myImageStyle = {
+	height: "200px",
+	width: "200px",
+	borderRadius: "50%"
+}
+
 const CarForm = ({ carObject={}, editing=false }) => {
 
 	const history = useHistory()
 
-	const [open, setOpen] = useState(false)
+	const { GetProfile } = useContext(AuthContext)
 
-	const [available, setAvailable] = useState(carObject.available || false)
+	const profile = GetProfile()
+
+	const [open, setOpen] = useState(false)
+	const placeholder = new File(['carImage-0'], 'carImage-0.jpg', { type: 'image/jpeg' })
+
+	const [available, setAvailable] = useState(true)
+
+	const [addImage, image] = useMutation(ADD_CAR_IMAGE)
+	const [imageUploaded, setImageUploaded] = useState(false)
+	const [identifier, setIdentifier] = useState(61)
+
+	const handleUpload =  ({ target }) => {
+		
+		const file = target.files[0]
+		const validity = target.validity
+		
+		if (validity.valid) {
+			addImage({ variables: { file } })
+			setImageUploaded(true)
+		} else {
+			alert("Error uploading image")
+		}
+	}
+
+	useEffect(() => {
+		if (imageUploaded && image.data) {
+			setIdentifier(image.data.uploadCarImage.id)
+		}
+	}, [image, imageUploaded, identifier])
+
+	const initialCar = {
+			profileId: profile.data.profile.id || 0,
+			carImageId: identifier,
+			make: carObject.make || '',
+			model: carObject.model || '',
+			vin: carObject.vin ||  0,
+			year: carObject.year ||  0,
+			condition: carObject.condition || '',
+			ratePerDay: carObject.ratePerDay || 35,
+			maxMilesPerDay: carObject.maxMilesPerDay || 100,
+			available: carObject.available || available 
+	}
 
 	const cancel = () => {
-		history.push('/manage')
+		history.push(`/manage/${profile.data.profile.id}`)
 	}
 
 	const handleClose = () => {
@@ -40,25 +90,58 @@ const CarForm = ({ carObject={}, editing=false }) => {
 
 	const formik = useFormik({
 		initialValues: {
-			make: carObject.make,
-			model: carObject.model,
-			vin: carObject.vin,
-			condition: carObject.condition,
-			ratePerDay: carObject.ratePerDay,
-			maxMilesPerDay: carObject.maxMilesPerDay,
-			available: carObject.available
+			make: initialCar.make,
+			model: initialCar.model,
+			vin: initialCar.vin,
+			year: initialCar.year,
+			condition: initialCar.condition,
+			ratePerDay: initialCar.ratePerDay,
+			maxMilesPerDay: initialCar.maxMilesPerDay,
 		},
 		validationSchema: schema,
 		onSubmit: async (values) => {
 			const input = Object.assign({}, values)
-			input.profileId = 0
-			input.carImageId = 0
+			input.profileId = initialCar.profileId
+			input.carImageId = initialCar.carImageId
+			input.maxMilesPerDay = Number(input.maxMilesPerDay)
+			input.ratePerDay = Number(input.ratePerDay)
+			input.available = available
 			try {
-				//addCar({ variables: { input }})
-				//history.push('/manage')
-				console.log(input)
+				addCar({ 
+					variables: { input },
+					optimisticResponse: {
+						__typename: "Mutation",
+						addCar: {
+							id: Math.floor(Math.random() * 1000000) + "",
+							make: input.make,
+							model: input.model,
+							year: input.year,
+							vin: input.vin,
+							condition: input.condition,
+							image: {
+								image: {
+									location: '/static/assets/images/cars/carImage-0',
+									name: 'carImage-0',
+								},
+							},
+							ratePerDay: input.ratePerDay,
+							maxMilesPerDay: input.maxMilesPerDay,
+							available: input.available,
+							owner: {
+								id: Math.floor(Math.random() * 1000000) + "",
+								profile: {
+									firstName: "Anon",
+									lastName: "ymous"
+								}
+							}
+						}
+					}
+				})
+				setTimeout(function() {
+					history.push(`/manage/${profile.data.profile.id}`)
+				}, 2000);
 			} catch (err) {
-				console.log(err)
+				setOpen(true)
 			}
 		}
 	})
@@ -72,6 +155,22 @@ const CarForm = ({ carObject={}, editing=false }) => {
 		  	:
 		  	<h1>Create a car</h1>
 		  }
+		  <div>
+		  	{ 
+		  		imageUploaded && image.data ? 
+		  			<>
+		  			<p>Image Uploaded!</p>
+		  			<img src={url + image.data.uploadCarImage.image.location} style={myImageStyle} alt="profile" />
+		  			</>
+		  		:
+				<>
+					<img src={placeholder.name} style={myImageStyle} alt="default avatar" />
+					<p>use our placeholder car image or upload your own car picture</p>
+		  			<input type="file" accept="image/*" onChange={handleUpload} />
+		  		</>
+
+		  	}
+		  </div>
 	      <form onSubmit={formik.handleSubmit}>
 	        <TextField
 	          fullWidth
@@ -92,7 +191,7 @@ const CarForm = ({ carObject={}, editing=false }) => {
 	          onChange={formik.handleChange}
 	          error={formik.touched.model && Boolean(formik.errors.model)}
 	          helperText={formik.touched.model && formik.errors.model}
-	        />
+	        /> 
 	        <TextField
 	          fullWidth
 	          id="year"
@@ -143,22 +242,12 @@ const CarForm = ({ carObject={}, editing=false }) => {
 	          error={formik.touched.maxMilesPerDay && Boolean(formik.errors.maxMilesPerDay)}
 	          helperText={formik.touched.maxMilesPerDay && formik.errors.maxMilesPerDay}
 	        />
-	        <TextField
-	          fullWidth
-	          id="ratePerDay"
-	          name="ratePerDay"
-	          label="ratePerDay"
-	          value={formik.values.ratePerDay}
-	          onChange={formik.handleChange}
-	          error={formik.touched.ratePerDay && Boolean(formik.errors.ratePerDay)}
-	          helperText={formik.touched.ratePerDay && formik.errors.ratePerDay}
-	        />
 	        <FormControlLabel
 	        	control={
 	        		<Switch
 			          name="available"
-			          checked={formik.values.available}
-			          value={formik.values.available}
+			          checked={available}
+			          value={available}
 			          onChange={handleSwitch}
 	       			/>
 	        	}

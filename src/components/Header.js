@@ -10,64 +10,77 @@ import { AuthContext } from "../context/AuthContext";
 const Header = () => {
 
 	const history = useHistory()
-	const { isAuthenticatedAndProfileCreated, isAuthenticatedButProfileNotCreated, GetProfile } = useContext(AuthContext); 
+	const { isAuthenticatedAndProfileCreated, isAuthenticatedButProfileNotCreated, GetProfile, logout } = useContext(AuthContext); 
 
 	const handleRoute = pageURL => {
 		history.push(pageURL)
-	}
+	} 
 
-	useEffect(() => {
-		console.log("refresh")
-	}, [isAuthenticatedAndProfileCreated, isAuthenticatedButProfileNotCreated])
+	let path = '/'
 
 	const baseUrl = "http://localhost:4000"
-	const { data, loading, error } = GetProfile()
-	let profileImage;
-	if (data)
-	profileImage = baseUrl + data.profile.avatar.image.location
+	const { data, error } = GetProfile()
 
-	return (
-		<Fragment>
-		<AppBar position="static">
-			<ToolBar>
-				{isAuthenticatedAndProfileCreated() ?
-					<Grid container justify="space-between" style={{ alignItems: 'center' }}>
-						<Grid item>
-							<Button variant="contained" onClick={() => handleRoute("/")}>Explore</Button>
+	useEffect(() => {
+		if (data && data.profile) {
+			path = `/manage/${data.profile.id}`
+		}
+	}, [data])
+
+	useEffect(() => {
+		console.log("REFRESH")
+	}, [isAuthenticatedButProfileNotCreated, isAuthenticatedAndProfileCreated, GetProfile, logout])
+
+
+	let profileImage;
+	if (error) return <p>Error</p>
+
+	if (data && (document.cookie === 'signedin=true' || document.cookie === 'account=true')) {
+		console.log("data in header", data)
+		profileImage = baseUrl + data.profile.avatar.image.location
+
+		return (
+			<Fragment>
+			<AppBar position="static">
+				<ToolBar>
+						<Grid container justify="space-between" style={{ alignItems: 'center' }}>
+							<Grid item>
+								<Button variant="contained" onClick={() => handleRoute("/")}>Explore</Button>
+							</Grid>
+							<Grid item>
+								<Button onClick={() => handleRoute(path)}>
+									<Avatar alt="avatar" src={profileImage} />
+									<p>Your Cars</p>
+								</Button>
+							</Grid>
+							<Grid item>
+								<Button onClick={() => logout()}>Signout</Button>
+							</Grid>
 						</Grid>
-						{data ?
-						<Grid item>
-							<Button onClick={() => handleRoute("/manage")}>
-								<Avatar alt="avatar" src={profileImage} styles />
-								<p>Your Cars</p>
-							</Button>
+				</ToolBar>
+			</AppBar>
+			</Fragment>
+		)
+	} else {
+		return (
+			<Fragment>
+				<AppBar position="static">
+					<ToolBar>
+						<Grid container justify="space-between">
+							<Grid item>
+								<Button variant="contained" onClick={() => handleRoute("/")}>Explore</Button>
+							</Grid>
+							<Grid item>
+								<Button onClick={() => handleRoute("/login")}>Login</Button>
+								<Button onClick={() => handleRoute("/signup")}>Signup</Button>
+							</Grid>
 						</Grid>
-						:
-						<></>
-						}
-						<Grid item>
-							<Button>Signout</Button>
-						</Grid>
-					</Grid>
-					:
-					isAuthenticatedButProfileNotCreated() ?
-					<></>
-					:
-					<Grid container justify="space-between">
-						<Grid item>
-							<Button variant="contained" onClick={() => handleRoute("/")}>Explore</Button>
-						</Grid>
-						<Grid item>
-							<Button onClick={() => handleRoute("/login")}>Login</Button>
-							<Button onClick={() => handleRoute("/signup")}>Signup</Button>
-						</Grid>
-					</Grid>
-				}
-				
-			</ToolBar>
-		</AppBar>
-		</Fragment>
-	)
+					</ToolBar>
+				</AppBar>
+			</Fragment>
+		)
+	}
+
 }
 
 export default Header;

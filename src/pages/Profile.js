@@ -23,13 +23,11 @@ const myImageStyle = {
 	borderRadius: "50%"
 }
 
-const Profile = ({ profileInformation, edit }) => {
+const Profile = () => {
 
 	const { profileCreated } = useContext(AuthContext);
 
 	const { data } = useQuery(GET_USER)
-
-	if (profileInformation && edit) {}
 
 	// userId
 
@@ -90,7 +88,7 @@ const Profile = ({ profileInformation, edit }) => {
 			try {
 				addProfile({ variables: { input }})
 				profileCreated()
-				history.push('/manage')
+				history.push('/')
 			} catch (err) {
 				console.log(err)
 			}

@@ -79,6 +79,9 @@ const CARS_FIELDS = gql`
 				name
 			}
 		}
+		owner {
+			id
+		}
 	}
 `
 

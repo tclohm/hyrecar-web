@@ -3,10 +3,10 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
+import Button from "@material-ui/core/Button";
 import Avatar from "@material-ui/core/Avatar";
 import Badge from "@material-ui/core/Badge";
 import { makeStyles } from "@material-ui/core/styles";
-import { Link } from "react-router-dom";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -42,14 +42,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const CarCell = ({car}) => {
+const OwnerCarCell = ({owner, onDelete}) => {
 	const baseUrl = "http://localhost:4000"
-	const carImage = baseUrl + car.image.image.location
-	const profileImage = baseUrl + car.owner.profile.avatar.image.location
+	const carImage = baseUrl + owner.image.image.location
 	const styles = useStyles()
-
-	const path = `/detail/${car.id}`
-
 	return (
 		<div className={styles.root}>
 	      <Paper className={styles.paper}>
@@ -57,7 +53,7 @@ const CarCell = ({car}) => {
 	          <Grid item>
 	            <ButtonBase className={styles.image} disableRipple={true}>
 	              <img className={styles.img} src={carImage} alt="car" />
-	              {car.available ?
+	              {owner.available ?
 					<Badge badgeContent="available" color="primary" className={styles.availBadge} />
 	                :
 	                <Badge badgeContent="rented" color="error" className={styles.errorBadge} />
@@ -68,25 +64,23 @@ const CarCell = ({car}) => {
 	            <Grid item xs container direction="column" spacing={2}>
 	              <Grid item xs>
 	                <Typography variant="subtitle1">
-	                  {car.make} {car.model}
+	                  {owner.make} {owner.model}
 	                </Typography>
 	                <Typography variant="body2" color="textSecondary">
-	                  condition: {car.condition}
+	                  condition: {owner.condition}
 	                </Typography>
 	              </Grid>
 	              <Grid item>
-	                <Link to={path}>
-	                	More info
-	                </Link>
+	            	<Button onClick={() => onDelete(owner)}>Delete</Button>
+	              </Grid>
+	              <Grid item>
+	            	{owner.available} place switch
 	              </Grid>
 	            </Grid>
 	            <Grid item>
 	            	<Grid item xs container direction="column">
 	            		<Grid item>
-	              			<Typography variant="subtitle1">${car.ratePerDay}/day</Typography>
-	            		</Grid>
-	            		<Grid item>
-	            			<Avatar alt="avatar" src={profileImage} className={styles.small} />
+	              			<Typography variant="subtitle1">${owner.ratePerDay}/day</Typography>
 	            		</Grid>
 	            	</Grid>
 	          </Grid>
@@ -97,4 +91,4 @@ const CarCell = ({car}) => {
 	)
 }
 
-export default CarCell;
+export default OwnerCarCell;

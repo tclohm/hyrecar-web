@@ -18,6 +18,39 @@ export const GET_USER = gql`
 	}
 `
 
+export const GET_CAR = gql`
+	query getCar($id: ID!) {
+		car(id: $id) {
+			id
+			make
+			model
+			year
+			condition
+			ratePerDay
+			maxMilesPerDay
+			available
+			image {
+				image {
+					name
+					location
+				}
+			}
+			owner {
+				profile {
+					firstName
+					lastName
+					avatar {
+						image {
+							name
+							location
+						}
+					}
+				}
+			}
+		}
+	}
+`;
+
 export const GET_USER_PROFILE = gql`
 	query getProfile {
 		profile {
@@ -25,4 +58,33 @@ export const GET_USER_PROFILE = gql`
 		}
 	}
 	${USER_PROFILE_FIELDS}
+`
+
+export const GET_OWNED_CARS = gql`
+	query Owner($id: ID!) {
+		owner(id: $id) {
+			id
+			make
+			model
+			year
+			vin
+			condition
+			image {
+				image {
+					location
+					name
+				}
+			}
+			ratePerDay
+			maxMilesPerDay
+			available
+			owner {
+				id
+				profile {
+					firstName
+					lastName
+				}
+			}
+		}
+	}
 `
