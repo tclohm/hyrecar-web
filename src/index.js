@@ -14,11 +14,11 @@ import reportWebVitals from './reportWebVitals';
 
 const Root = () => (
 	<BrowserRouter>
+		<ApolloProvider client={client}>
 			<AuthProvider>
-				<ApolloProvider client={client}>
-	    			<App />
-	    		</ApolloProvider>
-    		</AuthProvider>
+				<App />
+			</AuthProvider>
+		</ApolloProvider>
 	</BrowserRouter>
 )
 

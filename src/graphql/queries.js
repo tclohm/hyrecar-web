@@ -1,11 +1,28 @@
 import gql from "graphql-tag";
-import { CARS_FIELD } from "./fields";
+import { EXPLORE_CARS_FIELD, USER_ID, USER_PROFILE_FIELDS } from "./fields";
 
 export const GET_CARS = gql`
 	query carsList {
 		cars {
-			...CarsField
+			...ExploreCarsFields
 		}
 	}
-	${CARS_FIELD}
+	${EXPLORE_CARS_FIELD}
 `;
+
+export const GET_USER = gql`
+	query yourUser {
+		getUser {
+			id
+		}
+	}
+`
+
+export const GET_USER_PROFILE = gql`
+	query getProfile {
+		profile {
+			...ProfileField
+		}
+	}
+	${USER_PROFILE_FIELDS}
+`

@@ -52,18 +52,18 @@ const CarCell = ({car}) => {
 	        <Grid container spacing={2}>
 	          <Grid item>
 	            <ButtonBase className={styles.image} disableRipple={true}>
-	              <img className={styles.img} alt="car" src={carImage} />
+	              <img className={styles.img} src={carImage} alt="car" />
 	              {car.available ?
-					<Badge badgeContent="available" gutterBottom color="primary" className={styles.availBadge} />
+					<Badge badgeContent="available" color="primary" className={styles.availBadge} />
 	                :
-	                <Badge badgeContent="rented" gutterBottom color="error" className={styles.errorBadge} />
+	                <Badge badgeContent="rented" color="error" className={styles.errorBadge} />
 	              }
 	            </ButtonBase>
 	          </Grid>
 	          <Grid item xs={12} sm container>
 	            <Grid item xs container direction="column" spacing={2}>
 	              <Grid item xs>
-	                <Typography gutterBottom variant="subtitle1">
+	                <Typography variant="subtitle1">
 	                  {car.make} {car.model}
 	                </Typography>
 	                <Typography variant="body2" color="textSecondary">
