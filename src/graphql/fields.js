@@ -48,32 +48,21 @@ export const PUBLIC_PROFILE = gql`
 	}
 `;
 
-export const USER_PROFILE = gql`
-	fragment Cars on CarOwner {
-		profile {
-			user {
-				id
-			}
-		}
-		cars {
+export const USER_PROFILE_FIELDS = gql`
+	fragment ProfileField on Profile {
+		id
+		firstName
+		lastName
+		license
+		avatar {
 			id
-			make
-			model
-			year
-			vin
-			condition
-			ratePerDay
-			maxMilesPerDay
-			available
 			image {
-				image {
-					filename
-					location
-				}
+				location
+				name
 			}
 		}
 	}
-`;
+`
 
 const CARS_FIELDS = gql`
 	fragment CarsFields on Cars {
@@ -87,7 +76,7 @@ const CARS_FIELDS = gql`
 		image {
 			image {
 				location
-				filename
+				name
 			}
 		}
 	}
@@ -95,8 +84,10 @@ const CARS_FIELDS = gql`
 
 const PROFILE_IMAGE = gql`
 	fragment ProfileImageFields on ProfileImage {
+		id
 		image {
-			filename
+			id
+			name
 			mimetype
 			encoding
 			location
@@ -109,6 +100,11 @@ const PROFILE_FIELDS = gql`
 		firstName
 		lastName
 		license
-		renting
+	}
+`
+
+export const USER_ID = gql`
+	fragment UserId on User {
+		id
 	}
 `

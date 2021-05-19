@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 import AuthForm from "../components/AuthForm";
 import schema from "../validations/AuthSchema";
 import { useFormik } from 'formik';
@@ -7,6 +8,8 @@ import { useHistory } from "react-router-dom";
 const url = 'http://localhost:4000/signup';
 
 const Signup = () => {
+
+	const { accountCreated } = useContext(AuthContext);
 
 	const history = useHistory();
 
@@ -32,10 +35,9 @@ const Signup = () => {
 			})
 			.then(data => {
 				if (data.success) {
-					document.cookie = 'signedin=true;sameSite=String;secure=true;maxAge=18000;'
-					history.push("/profile")
+					accountCreated()
+					history.push("/profile-creation")
 				}
-				
 			})
 			.catch(err => {
 				console.log(err)
