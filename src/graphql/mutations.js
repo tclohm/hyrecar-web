@@ -34,6 +34,20 @@ export const ADD_PROFILE = gql`
 	}
 `
 
+export const ADD_CAR_IMAGE = gql`
+	mutation CarImageUpload($file: Upload!) {
+		uploadCarImage(file: $file) {
+			id 
+			image {
+				name
+				mimetype
+				encoding
+				location
+			}
+		}
+	}
+`;
+
 // car owner comes back
 export const ADD_CAR = gql`
 	mutation AddCar($input: CarInput!) {
@@ -44,11 +58,28 @@ export const ADD_CAR = gql`
 			year
 			vin
 			condition
-			image
+			image {
+				image {
+					location
+					name
+				}
+			}
 			ratePerDay
 			maxMilesPerDay
 			available
-			owner
+			owner {
+				id
+				profile {
+					firstName
+					lastName
+				}
+			}
 		}
+	}
+`
+
+export const DELETE_CAR = gql`
+	mutation DeleteCar($id: ID!) {
+		deleteCar(id: $id)
 	}
 `

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import AuthForm from "../components/AuthForm";
 import schema from "../validations/AuthSchema";
@@ -9,9 +9,16 @@ const url = 'http://localhost:4000/signup';
 
 const Signup = () => {
 
+	const history = useHistory();
+
 	const { accountCreated } = useContext(AuthContext);
 
-	const history = useHistory();
+	const [open, setOpen] = useState(false)
+
+	const handleClose = () => {
+		setOpen(false)
+	}
+
 
 	const formik = useFormik({
 		initialValues: {
@@ -31,12 +38,15 @@ const Signup = () => {
 
 			fetch(url, options)
 			.then(response => {
+				console.log("hello")
 				return response.json()
 			})
 			.then(data => {
 				if (data.success) {
 					accountCreated()
 					history.push("/profile-creation")
+				} else {
+					setOpen(true)
 				}
 			})
 			.catch(err => {
@@ -46,7 +56,7 @@ const Signup = () => {
 	})
 
 	return (
-		<AuthForm formik={formik} title="Sign up" />
+		<AuthForm formik={formik} title="Sign up" open={open} handleClose={handleClose} />
 	)
 }
 

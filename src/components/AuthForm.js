@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment } from "react";
 import Container from "@material-ui/core/Container";
 import Snackbar from "@material-ui/core/Snackbar";
 import Button from "@material-ui/core/Button";
@@ -6,13 +6,7 @@ import TextField from "@material-ui/core/TextField";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from '@material-ui/icons/Close';
 
-const AuthForm = ({ formik, title }) => {
-
-	const [open, setOpen] = useState(false)
-
-	const handleClose = () => {
-		setOpen(false)
-	}
+const AuthForm = ({ formik, title, open, handleClose }) => {
 
 	return (
 	<Container>

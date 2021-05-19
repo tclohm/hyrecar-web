@@ -4,6 +4,8 @@ import { createUploadLink } from "apollo-upload-client";
 
 const url = 'http://localhost:4000/graphql'
 
+// useQuery fetch policy
+
 const link = createUploadLink({ useGETForQueries: true, uri: url , credentials: 'include' })
 
 const cache = new InMemoryCache();

@@ -1,14 +1,24 @@
-import React from "react";
+import React, { useContext, useState } from "react";
+import { AuthContext } from "../context/AuthContext";
 import AuthForm from "../components/AuthForm";
 import schema from "../validations/AuthSchema";
 import { useFormik } from 'formik';
 import { useHistory } from "react-router-dom";
+
 
 const url = 'http://localhost:4000/login';
 
 const Login = () => {
 
 	const history = useHistory();
+
+	const { profileCreated } = useContext(AuthContext);
+
+	const [open, setOpen] = useState(false)
+
+	const handleClose = () => {
+		setOpen(false)
+	}
 
 	const formik = useFormik({
 		initialValues: {
@@ -32,9 +42,11 @@ const Login = () => {
 			})
 			.then(data => {
 				if (data.success) {
-					document.cookie = 'signedin=true;sameSite=String;secure=true;maxAge=18000;'
+					profileCreated()
+					history.push("/")
+				} else {
+					setOpen(true)
 				}
-				history.push("/profile")
 			})
 			.catch(err => {
 				console.log(err)
@@ -43,7 +55,7 @@ const Login = () => {
 	})
 
 	return (
-		<AuthForm formik={formik} title="Log in" />
+		<AuthForm formik={formik} title="Log in" open={open} handleClose={handleClose} />
 	)
 }
 
