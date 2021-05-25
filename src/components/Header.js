@@ -1,86 +1,18 @@
-import React, { Fragment, useContext, useEffect } from "react";
-import Grid from "@material-ui/core/Grid";
-import AppBar from "@material-ui/core/AppBar";
-import ToolBar from "@material-ui/core/ToolBar";
-import Button from "@material-ui/core/Button";
-import Avatar from "@material-ui/core/Avatar";
-import { useHistory } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext";
+import React from "react";
+import { Link } from "react-router-dom";
+
 
 const Header = () => {
-
-	const history = useHistory()
-	const { isAuthenticatedAndProfileCreated, isAuthenticatedButProfileNotCreated, GetProfile, logout } = useContext(AuthContext); 
-
-	const handleRoute = pageURL => {
-		history.push(pageURL)
-	} 
-
-	let path = '/'
-
-	const baseUrl = "http://localhost:4000"
-	const { data, error } = GetProfile()
-
-	useEffect(() => {
-		if (data && data.profile) {
-			path = `/manage/${data.profile.id}`
-		}
-	}, [data])
-
-	useEffect(() => {
-		console.log("REFRESH")
-	}, [isAuthenticatedButProfileNotCreated, isAuthenticatedAndProfileCreated, GetProfile, logout])
-
-
-	let profileImage;
-	if (error) return <p>Error</p>
-
-	if (data && (document.cookie === 'signedin=true' || document.cookie === 'account=true')) {
-		console.log("data in header", data)
-		profileImage = baseUrl + data.profile.avatar.image.location
-
-		return (
-			<Fragment>
-			<AppBar position="static">
-				<ToolBar>
-						<Grid container justify="space-between" style={{ alignItems: 'center' }}>
-							<Grid item>
-								<Button variant="contained" onClick={() => handleRoute("/")}>Explore</Button>
-							</Grid>
-							<Grid item>
-								<Button onClick={() => handleRoute(path)}>
-									<Avatar alt="avatar" src={profileImage} />
-									<p>Your Cars</p>
-								</Button>
-							</Grid>
-							<Grid item>
-								<Button onClick={() => logout()}>Signout</Button>
-							</Grid>
-						</Grid>
-				</ToolBar>
-			</AppBar>
-			</Fragment>
-		)
-	} else {
-		return (
-			<Fragment>
-				<AppBar position="static">
-					<ToolBar>
-						<Grid container justify="space-between">
-							<Grid item>
-								<Button variant="contained" onClick={() => handleRoute("/")}>Explore</Button>
-							</Grid>
-							<Grid item>
-								<Button onClick={() => handleRoute("/login")}>Login</Button>
-								<Button onClick={() => handleRoute("/signup")}>Signup</Button>
-							</Grid>
-						</Grid>
-					</ToolBar>
-				</AppBar>
-			</Fragment>
-		)
-	}
-
+	return (
+		<header className="min-full flex justify-between py-6 sticky top-0 z-40 lg:z-50 text-sm w-full max-w-8xl mx-auto h-16 border-white bg-white">
+			<Link className="mx-4" to="/">Explore</Link>
+			<input className="bg-gray-100 p-4 md:flex-none flex-1 w-96 rounded focus:bg-white focus:shadow-xl" type="text" placeholder="search" />
+			<nav>
+				<button className="mx-2" type="button">Sign in</button>
+				<button className="mx-4" type="button">Sign up</button>
+			</nav>
+		</header>
+	)
 }
 
-export default Header;
+export default Header

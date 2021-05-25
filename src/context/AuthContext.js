@@ -1,7 +1,7 @@
 import React, { createContext } from "react";
 import { useHistory } from "react-router-dom";
-import { GET_USER_PROFILE } from "../graphql/queries";
-import { useQuery } from "@apollo/react-hooks";
+//import { GET_USER_PROFILE } from "../graphql/queries";
+//import { useQuery } from "@apollo/react-hooks";
 
 export const AuthContext = createContext();
 
@@ -31,10 +31,10 @@ export const AuthProvider = ({ children }) => {
 		document.cookie = 'account=true;sameSite=Lax;secure=true;expires='+now.toUTCString()+';path=/'
 	}
 
-	const GetProfile = () => {
-		const { data, loading, error } = useQuery(GET_USER_PROFILE)	
-		return { data, loading, error } 
-	}
+	// const GetProfile = () => {
+	// 	const { data, loading, error } = useQuery(GET_USER_PROFILE)	
+	// 	return { data, loading, error } 
+	// }
 
 	const profileCreated = () => {
 		if (document.cookie === "account=true") {
@@ -75,7 +75,6 @@ export const AuthProvider = ({ children }) => {
 			isAuthenticatedAndProfileCreated,
 			accountCreated,
 			profileCreated,
-			GetProfile,
 			logout 
 		}}>
 			{children}

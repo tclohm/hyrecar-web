@@ -1,18 +1,12 @@
 import React, { Fragment } from "react";
-import Container from "@material-ui/core/Container";
-import Snackbar from "@material-ui/core/Snackbar";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from '@material-ui/icons/Close';
 
-const AuthForm = ({ formik, title, open, handleClose }) => {
+const AuthForm = ({ formik, title }) => {
 
 	return (
-	<Container>
+	<section>
 		  <h1>{title}</h1>
 	      <form onSubmit={formik.handleSubmit}>
-	        <TextField
+	        <input
 	          fullWidth
 	          id="email"
 	          name="email"
@@ -22,7 +16,7 @@ const AuthForm = ({ formik, title, open, handleClose }) => {
 	          error={formik.touched.email && Boolean(formik.errors.email)}
 	          helperText={formik.touched.email && formik.errors.email}
 	        />
-	        <TextField
+	        <input
 	          fullWidth
 	          id="password"
 	          name="password"
@@ -33,28 +27,11 @@ const AuthForm = ({ formik, title, open, handleClose }) => {
 	          error={formik.touched.password && Boolean(formik.errors.password)}
 	          helperText={formik.touched.password && formik.errors.password}
 	        />
-	        <Button color="primary" variant="contained" fullWidth type="submit">
+	        <button color="primary" variant="contained" fullWidth type="submit">
 	          Submit
-	        </Button>
+	        </button>
 	      </form>
-	      <Snackbar
-	      	anchorOrigin={{
-	      		vertical: 'top',
-	      		horizontal: 'right',
-	      	}}
-	      	open={open}
-	      	autoHideDuration={6000}
-	      	onClose={handleClose}
-	      	message="An error occurred"
-	      	action={
-	      		<Fragment>
-	      			<IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
-	      				<CloseIcon fontSize="small" />
-	      			</IconButton>
-	      		</Fragment>
-	      	}
-	      />
-	    </Container>
+	</section>
 	)
 }
 
