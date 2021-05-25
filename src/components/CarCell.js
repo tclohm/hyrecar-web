@@ -1,99 +1,35 @@
 import React from "react";
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import ButtonBase from '@material-ui/core/ButtonBase';
-import Avatar from "@material-ui/core/Avatar";
-import Badge from "@material-ui/core/Badge";
-import { makeStyles } from "@material-ui/core/styles";
+import Star from "./Star";
+
 import { Link } from "react-router-dom";
-
-
-const useStyles = makeStyles((theme) => ({
-	root: {
-		flexGrow: 1,
-	},
-	paper: {
-		padding: theme.spacing(1),
-		margin: 'auto',
-		maxWidth: 500,
-	},
-	image: {
-		position: 'static',
-		width: 128,
-		height: 128,
-	},
-	img: {
-		margin: 'auto',
-		display: 'block',
-		maxWidth: '100%',
-		maxHeight: '100%',
-	},
-	errorBadge: {
-		position: 'absolute',
-	},
-	availBadge: {
-		position: 'absolute',
-	},
-	small: {
-		width: theme.spacing(3),
-		height: theme.spacing(3),
-	}
-}));
 
 
 const CarCell = ({car}) => {
 	const baseUrl = "http://localhost:4000"
 	const carImage = baseUrl + car.image.image.location
-	const profileImage = baseUrl + car.owner.profile.avatar.image.location
-	const styles = useStyles()
 
 	const path = `/detail/${car.id}`
 
 	return (
-		<div className={styles.root}>
-	      <Paper className={styles.paper}>
-	        <Grid container spacing={2}>
-	          <Grid item>
-	            <ButtonBase className={styles.image} disableRipple={true}>
-	              <img className={styles.img} src={carImage} alt="car" />
-	              {car.available ?
-					<Badge badgeContent="available" color="primary" className={styles.availBadge} />
-	                :
-	                <Badge badgeContent="rented" color="error" className={styles.errorBadge} />
-	              }
-	            </ButtonBase>
-	          </Grid>
-	          <Grid item xs={12} sm container>
-	            <Grid item xs container direction="column" spacing={2}>
-	              <Grid item xs>
-	                <Typography variant="subtitle1">
-	                  {car.make} {car.model}
-	                </Typography>
-	                <Typography variant="body2" color="textSecondary">
-	                  condition: {car.condition}
-	                </Typography>
-	              </Grid>
-	              <Grid item>
-	                <Link to={path}>
-	                	More info
-	                </Link>
-	              </Grid>
-	            </Grid>
-	            <Grid item>
-	            	<Grid item xs container direction="column">
-	            		<Grid item>
-	              			<Typography variant="subtitle1">${car.ratePerDay}/day</Typography>
-	            		</Grid>
-	            		<Grid item>
-	            			<Avatar alt="avatar" src={profileImage} className={styles.small} />
-	            		</Grid>
-	            	</Grid>
-	          </Grid>
-	        </Grid>
-	        </Grid>
-	      </Paper>
-	    </div>
+		<Link to={path}>
+			<div className="h-60 w-96 sm:w-60 md:w-48 bg-cover flex flex-col justify-center m-4 relative" style={{ backgroundImage: "url(" + carImage+ ")" }}>
+				<div className="w-full flex justify-center bg-black bg-opacity-40">
+					<h1 className="font-semibold text-white mr-1 text-sm">{car.model}</h1>
+					<h3 className="font-extralight text-white ml-1 text-sm"> {car.make}</h3>
+				</div>
+				{car.available ? 
+					<p className="absolute bottom-0 right-0 bg-green-400 text-white px-2 m-2 rounded">available</p> 
+					: 
+					<p className="absolute bottom-0 right-0 bg-red-400 text-white px-2 m-2 rounded">not available</p>}
+			</div>
+			<div className="flex justify-between text-sm">
+					<p className="text-gray-500">{car.year}</p>
+					<div className="flex items-center text-gray-500">
+						<p>{car.owner.rating}</p>
+						<Star className="h-4 w-4 fill-current text-yellow-300" />
+					</div>
+			</div>
+		</Link>
 	)
 }
 

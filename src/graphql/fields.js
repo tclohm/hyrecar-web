@@ -1,113 +1,71 @@
 import gql from "graphql-tag";
 
-export const EXPLORE_CARS_FIELD = gql`
-	fragment ExploreCarsFields on Car {
+
+export const CAR_FIELDS = gql`
+	fragment CarFields on Car {
 		id
 		make
 		model
 		year
-		vin
-		condition
+		available
 		ratePerDay
 		maxMilesPerDay
-		available
+		image {
+			image {
+				name
+				location
+			}
+		}
 		owner {
-			profile {
+			rating
+		}
+	}
+`
+
+export const CAR_DETAIL_FIELDS = gql`
+	fragment CarFields on Car {
+		id
+		make
+		model
+		year
+		available
+		ratePerDay
+		maxMilesPerDay
+		image {
+			image {
+				name
+				location
+			}
+		}
+		rating {
+			id
+			interiors
+			exteriors
+			steering
+			braking
+			acceleration
+			cleaniness
+			review
+			reviewer {
 				firstName
-				lastName
 				avatar {
 					image {
+						name
 						location
 					}
 				}
 			}
 		}
-		image {
-			image {
-				location
-			}
-		}
-	}
-`; 
-
-export const PUBLIC_PROFILE = gql`
-	fragment PublicField on Profile {
-		id
-		firstName
-		lastName
-		avatar {
-			image {
-				location
-			}
-		}
-		rating
-		state
-		transactions {
-			id
-		}
-	}
-`;
-
-export const USER_PROFILE_FIELDS = gql`
-	fragment ProfileField on Profile {
-		id
-		firstName
-		lastName
-		license
-		avatar {
-			id
-			image {
-				location
-				name
-			}
-		}
-	}
-`
-
-const CARS_FIELDS = gql`
-	fragment CarsFields on Cars {
-		id
-		make
-		model
-		year
-		vin
-		condition
-		ratePerDay
-		image {
-			image {
-				location
-				name
-			}
-		}
 		owner {
-			id
+			firstName
+			lastName
+			rating
+			avatar {
+				image {
+					name
+					location
+				}
+			}
 		}
-	}
-`
-
-const PROFILE_IMAGE = gql`
-	fragment ProfileImageFields on ProfileImage {
-		id
-		image {
-			id
-			name
-			mimetype
-			encoding
-			location
-		}
-	}
-`
-
-const PROFILE_FIELDS = gql`
-	fragment ProfileFields on Profile {
-		firstName
-		lastName
-		license
-	}
-`
-
-export const USER_ID = gql`
-	fragment UserId on User {
-		id
 	}
 `

@@ -2,17 +2,15 @@ import React from "react";
 import CarCell from "./CarCell";
 
 
-import Grid from "@material-ui/core/Grid";
-
 const CarsList = ({ cars }) => {
 	return (
-		<Grid container spacing={1}>
+		<section className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 mt-2">
 			{cars.map(car => (
-				<Grid item sm={12} key={car.id}>
+				<div className="rounded p-2 shadow-lg" key={car.id}>
 					<CarCell car={car} />
-				</Grid>
+				</div>
 			))}
-		</Grid>
+		</section>
 	)
 }
 

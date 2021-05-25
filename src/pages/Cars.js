@@ -1,25 +1,21 @@
 import React, { Fragment } from "react";
-
 import CarList from "../components/CarsList";
 
-import Box from "@material-ui/core/Box";
-
-import { GET_CARS } from "../graphql/queries";
-
+import { GET_ALL_CARS } from "../graphql/queries";
 import { useQuery } from "@apollo/react-hooks";
 
 const Cars = () => {
 
-	const { data, loading, error } = useQuery(GET_CARS);
+	const { data, loading, error } = useQuery(GET_ALL_CARS);
 
 	if (loading) return <p>loading...</p>
 	if (error) return <p>ERROR</p>
-	if (data)
+	if (data) console.log(data)
 	return (
 		<Fragment>
-			<Box my={2}>
+			<div className="flex justify-center">
 				<CarList cars={data.cars} />
-			</Box>
+			</div>
 		</Fragment>
 	)
 }
