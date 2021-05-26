@@ -3,7 +3,9 @@ import { AuthContext } from "../context/AuthContext";
 import AuthForm from "../components/AuthForm";
 import schema from "../validations/AuthSchema";
 import { useFormik } from 'formik';
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
+
+
 
 
 const url = 'http://localhost:4000/login';
@@ -27,35 +29,15 @@ const Login = () => {
 		},
 		validationSchema: schema,
 		onSubmit: (values) => {
-			const options = {
-				method: 'post',
-				credentials: 'include',
-				headers: {
-					'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
-				},
-				body: `email=${values.email}&password=${values.password}`
-			}
-
-			fetch(url, options)
-			.then(response => {
-				return response.json()
-			})
-			.then(data => {
-				if (data.success) {
-					profileCreated()
-					history.push("/")
-				} else {
-					setOpen(true)
-				}
-			})
-			.catch(err => {
-				console.log(err)
-			})
+			console.log(values)
 		}
 	})
 
 	return (
-		<AuthForm formik={formik} title="Log in" open={open} handleClose={handleClose} />
+		<>
+			<AuthForm formik={formik} title="Sign in" open={open} handleClose={handleClose} />
+			<p className="mx-8 mb-12 lg:ml-48">Create your account <Link className="text-blue-600" to="/signup">Sign up</Link>!</p>
+		</>
 	)
 }
 
