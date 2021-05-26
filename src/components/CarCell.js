@@ -12,7 +12,7 @@ const CarCell = ({car}) => {
 
 	return (
 		<Link to={path}>
-			<div className="h-60 w-96 sm:w-60 md:w-48 bg-cover flex flex-col justify-center m-4 relative" style={{ backgroundImage: "url(" + carImage+ ")" }}>
+			<div className="h-60 w-80 sm:w-60 md:w-48 bg-cover flex flex-col justify-center m-4 relative" style={{ backgroundImage: "url(" + carImage + ")" }}>
 				<div className="w-full flex justify-center bg-black bg-opacity-40">
 					<h1 className="font-semibold text-white mr-1 text-sm">{car.model}</h1>
 					<h3 className="font-extralight text-white ml-1 text-sm"> {car.make}</h3>

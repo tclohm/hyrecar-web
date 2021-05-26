@@ -1,16 +1,30 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Anon from "./Anon";
 
+const Header = ({ show, close }) => {
 
-const Header = () => {
 	return (
-		<header className="min-full flex justify-between py-6 sticky top-0 z-40 lg:z-50 text-sm w-full max-w-8xl mx-auto h-16 border-white bg-white">
-			<Link className="mx-4" to="/">Explore</Link>
-			<input className="bg-gray-100 p-4 md:flex-none flex-1 w-96 rounded focus:bg-white focus:shadow-xl" type="text" placeholder="search" />
-			<nav>
-				<button className="mx-2" type="button">Sign in</button>
-				<button className="mx-4" type="button">Sign up</button>
-			</nav>
+		<header onClick={close} className="min-full flex flex-col sm:py-4 md:pt-4 sticky top-0 z-40 lg:z-50 w-full max-w-8xl mx-auto border-white bg-white sm:text-sm text-xs shadow-sm">
+			<div className="hidden sm:flex justify-between items-center">
+				<Link 
+					className="mx-4" 
+					to="/"
+				>
+					Explore
+				</Link>
+				<input 
+					className="bg-gray-100 p-3 md:flex-none flex-1 w-1/3 rounded focus:bg-white focus:shadow-xl sm:inline hidden focus:outline-none" 
+					type="text" 
+					placeholder="search"
+				/>
+				<nav className="relative">
+					<button className="mx-10 focus:outline-none rounded-full" onClick={show}>
+						<Anon className="h-8 w-8 text-gray-400 stroke-current" />
+					</button>
+				</nav>
+			</div>
+			<input className="bg-gray-100 p-3 mx-3 my-5 md:flex-none flex-1 min-full rounded focus:bg-white focus:shadow-xl inline sm:hidden" type="text" placeholder="search" />
 		</header>
 	)
 }

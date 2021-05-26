@@ -3,7 +3,7 @@ import { AuthContext } from "../context/AuthContext";
 import AuthForm from "../components/AuthForm";
 import schema from "../validations/AuthSchema";
 import { useFormik } from 'formik';
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 
 const url = 'http://localhost:4000/signup';
 
@@ -56,7 +56,10 @@ const Signup = () => {
 	})
 
 	return (
+		<>
 		<AuthForm formik={formik} title="Sign up" open={open} handleClose={handleClose} />
+		<p className="mx-8 mb-12 lg:ml-48">Already have an account <Link className="text-blue-600" to="/login">Sign in</Link>!</p>
+		</>
 	)
 }
 
