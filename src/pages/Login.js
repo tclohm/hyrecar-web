@@ -1,5 +1,4 @@
-import React, { useContext, useState } from "react";
-import { AuthContext } from "../context/AuthContext";
+import React, { useState } from "react";
 import AuthForm from "../components/AuthForm";
 import schema from "../validations/AuthSchema";
 import { useFormik } from 'formik';
@@ -8,13 +7,11 @@ import { useHistory, Link } from "react-router-dom";
 
 
 
-const url = 'http://localhost:4000/login';
+//const url = 'http://localhost:4000/login';
 
 const Login = () => {
 
 	const history = useHistory();
-
-	const { profileCreated } = useContext(AuthContext);
 
 	const [open, setOpen] = useState(false)
 
@@ -30,6 +27,7 @@ const Login = () => {
 		validationSchema: schema,
 		onSubmit: (values) => {
 			console.log(values)
+			history.push('/')
 		}
 	})
 

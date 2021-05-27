@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App';
+import Creation from "./subroutes/CreationRoutes";
 import "tailwindcss/tailwind.css"
 
 
 // MARK: -- Third Party
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { ApolloProvider } from '@apollo/react-hooks';
 import { AuthProvider } from "./context/AuthContext";
 import client from './client';
@@ -17,7 +18,14 @@ const Root = () => (
 	<BrowserRouter>
 		<ApolloProvider client={client}>
 			<AuthProvider>
-				<App />
+				<Switch>
+					<Route path="/create">
+						<Creation />
+					</Route>
+					<Route path="/">
+						<App />
+					</Route>
+				</Switch>
 			</AuthProvider>
 		</ApolloProvider>
 	</BrowserRouter>
