@@ -16,5 +16,5 @@ export const lastName = yup.object().shape({
 })
 
 export const license = yup.object().shape({
-	license: yup.string('Enter your license').min(9, 'Must be more than 9').max(11, 'Must be less than 11').required('License is required'),
+	license: yup.string('Enter your license').min(9, 'Must be more than 9 characters').max(11, 'Must be less than 11 characters').required('License is required'),
 })
