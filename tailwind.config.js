@@ -14,7 +14,7 @@ module.exports = {
       animation: {
         'fade-down': 'intro 0.3s ease-in'
       },
-      'keyframes': {
+      keyframes: {
         intro: {
           '0%': { 
                     transform: 'translate(0, -3rem)',
@@ -31,7 +31,11 @@ module.exports = {
   variants: {
     extend: {
       backgroundColor: ['active'],
+      fontWeight: ['focus'],
+      borderWidth: ['hover', 'focus'],
     },
   },
-  plugins: [],
+  plugins: [
+    require('tailwind-scrollbar-hide')
+  ],
 }
