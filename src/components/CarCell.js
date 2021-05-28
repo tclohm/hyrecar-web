@@ -1,17 +1,20 @@
 import React from "react";
 import Star from "./Star";
 
-import { Link } from "react-router-dom";
+import { Link, useRouteMatch } from "react-router-dom";
 
 
 const CarCell = ({car}) => {
+
+	const { url } = useRouteMatch()
+
 	const baseUrl = "http://localhost:4000"
 	const carImage = baseUrl + car.image.image.location
 
-	const path = `/detail/${car.id}`
+	const uri = `${url}car/${car.id}`
 
 	return (
-		<Link to={path}>
+		<Link to={uri}>
 			<div className="h-60 w-80 sm:w-60 md:w-48 bg-cover flex flex-col justify-center m-4 relative" style={{ backgroundImage: "url(" + carImage + ")" }}>
 				<div className="w-full flex justify-center bg-black bg-opacity-40">
 					<h1 className="font-semibold text-white mr-1 text-sm">{car.model}</h1>

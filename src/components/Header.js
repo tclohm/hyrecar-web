@@ -18,8 +18,9 @@ const Header = ({ show, close }) => {
 					type="text" 
 					placeholder="search"
 				/>
-				<nav className="relative">
-					<button className="mx-10 focus:outline-none rounded-full" onClick={show}>
+				<nav className="relative flex">
+					<button className="px-2 text-gray-400 font-light align-items hover:bg-gray-300 rounded focus:outline-none">Rent your car</button>
+					<button className="mr-10 ml-4 focus:outline-none rounded-full" onClick={show}>
 						<Anon className="h-8 w-8 text-gray-400 stroke-current" />
 					</button>
 				</nav>
