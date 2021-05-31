@@ -3,8 +3,8 @@ import { CAR_FIELDS, CAR_DETAIL_FIELDS } from "./fields";
 
 
 export const GET_ALL_CARS = gql`
-	query carList {
-		cars {
+	query carList($type: CarType) {
+		cars(type: $type) {
 			...CarFields
 		}
 	}
