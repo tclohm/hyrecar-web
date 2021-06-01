@@ -7,16 +7,14 @@ import Cars from "../pages/Cars";
 import CarDetail from "../pages/CarDetail";
 import Signup from "../pages/Signup";
 import Login from "../pages/Login";
-//import Profile from "../pages/Profile";
+import Profile from "../pages/Profile";
 //import CarForm from "./CarForm";
 import Modal from "./Modal";
 
 // MARK: -- Third Party
-import { Switch, Route, useRouteMatch } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 
 function App() {
-
-  const { path } = useRouteMatch()
 
   const [open, setOpen] = useState(false)
 
@@ -45,9 +43,10 @@ function App() {
         }
         <Switch> 
             <Route exact path="/"><Cars /></Route>
-            <Route path={`${path}signup`}><Signup /></Route>
-            <Route path={`${path}login`}><Login /></Route>
-            <Route path={`${path}car/:id`}><CarDetail /></Route>
+            <Route path="/users/show/:id"><Profile /></Route>
+            <Route path="/signup"><Signup /></Route>
+            <Route path="/login"><Login /></Route>
+            <Route path="/car/:id"><CarDetail /></Route>
         </Switch>
         <BottomNavBar />
       </div>

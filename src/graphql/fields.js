@@ -23,7 +23,7 @@ export const CAR_FIELDS = gql`
 `
 
 export const CAR_DETAIL_FIELDS = gql`
-	fragment CarFields on Car {
+	fragment CarDetailFields on Car {
 		id
 		make
 		model
@@ -57,6 +57,7 @@ export const CAR_DETAIL_FIELDS = gql`
 			}
 		}
 		owner {
+			id
 			firstName
 			lastName
 			rating
@@ -66,6 +67,40 @@ export const CAR_DETAIL_FIELDS = gql`
 					location
 				}
 			}
+		}
+	}
+`
+
+export const PROFILE_FIELDS = gql`
+	fragment ProfileFields on Profile {
+		id
+		firstName
+		lastName
+		rating
+		avatar {
+			image {
+				name
+				location
+			}
+		}
+		cars {
+			id
+			make
+			model
+			year
+			type
+			owner {
+				rating
+			}
+			image {
+				image {
+					name
+					location
+				}
+			}
+		}
+		user {
+			createdAt
 		}
 	}
 `
