@@ -11,12 +11,14 @@ export const CAR_FIELDS = gql`
 		ratePerDay
 		maxMilesPerDay
 		image {
+			id
 			image {
 				name
 				location
 			}
 		}
 		owner {
+			id
 			rating
 		}
 	}
@@ -31,7 +33,20 @@ export const CAR_DETAIL_FIELDS = gql`
 		available
 		ratePerDay
 		maxMilesPerDay
+		airConditioning
+		automaticEmergencyBrakes
+		forwardCollisionWarning
+		blindSpotWarning
+		automaticHighBeams
+		carPlay
+		rearCamera
+		USBCharging
+		keylessEntry
+		headupDisplay
+		heatedSeats
+		wifiHotSpot
 		image {
+			id
 			image {
 				name
 				location
@@ -47,8 +62,10 @@ export const CAR_DETAIL_FIELDS = gql`
 			cleaniness
 			review
 			reviewer {
+				id
 				firstName
 				avatar {
+					id
 					image {
 						name
 						location
@@ -62,6 +79,7 @@ export const CAR_DETAIL_FIELDS = gql`
 			lastName
 			rating
 			avatar {
+				id
 				image {
 					name
 					location
@@ -72,12 +90,13 @@ export const CAR_DETAIL_FIELDS = gql`
 `
 
 export const PROFILE_FIELDS = gql`
-	fragment ProfileFields on Profile {
+	fragment ProfileDetailFields on Profile {
 		id
 		firstName
 		lastName
 		rating
 		avatar {
+			id
 			image {
 				name
 				location
@@ -90,9 +109,11 @@ export const PROFILE_FIELDS = gql`
 			year
 			type
 			owner {
+				id
 				rating
 			}
 			image {
+				id
 				image {
 					name
 					location
@@ -100,6 +121,7 @@ export const PROFILE_FIELDS = gql`
 			}
 		}
 		user {
+			id
 			createdAt
 		}
 	}

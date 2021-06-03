@@ -23,7 +23,7 @@ export const GET_SINGLE_CAR = gql`
 export const GET_PROFILE = gql`
 	query profileDetail($id: ID!) {
 		profile(id: $id) {
-			...ProfileFields
+			...ProfileDetailFields
 		}
 	}
 	${PROFILE_FIELDS}

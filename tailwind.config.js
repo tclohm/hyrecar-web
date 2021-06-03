@@ -16,7 +16,11 @@ module.exports = {
         'progress-1': 'grow-1 0.3s ease-out',
         'progress-2': 'grow-2 0.3s ease-out',
         'progress-3': 'grow-3 0.3s ease-out',
-        'progress-4': 'grow-4 0.3s ease-out'
+        'progress-4': 'grow-4 0.3s ease-out',
+        'progress-1-reverse': 'grow-1 0.3s ease-out reverse',
+        'progress-2-reverse': 'grow-2 0.3s ease-out reverse',
+        'progress-3-reverse': 'grow-3 0.3s ease-out reverse',
+        'progress-4-reverse': 'grow-4 0.3s ease-out reverse',
       },
       keyframes: {
         intro: {
