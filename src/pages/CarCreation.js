@@ -1,27 +1,35 @@
 import React, { useState, useEffect } from "react";
 
 import Error from "../components/Error";
-import BigInputText from "../components/BigInputText";
 import BigInputImagePreview from "../components/BigInputImagePreview";
-import SmallInputText from "../components/SmallInputText";
 import SmallInputImagePreview from "../components/SmallInputImagePreview";
 import BottomNavForCreation from "../components/BottomNavForCreation";
+
 import useLocalStorage from "../hooks/useLocalStorage";
+
+import makers from "../data/makers";
+import info from "../data/cars";
+import { schema } from "../validations/CarSchema";
 
 import { useHistory } from "react-router-dom";
 
-import info from "../data/profile"
+const inputLilScreenAnimate= "bg-gray-200 rounded p-4 mt-4 md:hidden focus:outline-none animate-fade-down"
+const inputLilScreenNoAnimate = "bg-gray-200 rounded p-4 mt-4 md:hidden focus:outline-none active:ring focus:ring focus:ring-gray-300"
+
+const inputBigScreenAnimate = "bg-gray-200 rounded p-4 w-1/2 focus:outline-none animate-fade-down" 
+const inputBigScreenNoAnimate = "bg-gray-200 rounded p-4 w-1/2 focus:outline-none active:ring focus:ring focus:ring-gray-300"
 
 const textAnimate = "md:text-white font-black animate-fade-down"
 const textNoAnimate = "md:text-white font-black"
 
-const ProfileCreation = () => {
+const CarCreation = () => {
 
-	const [input, setInput] = useState({ firstName: "", lastName:  "", license: "" })
-	const [image, setImage] = useState('/anon-0.jpg')
+	const [input, setInput] = useState({ make: "", model: "", year: "", vin: "", ratePerDay: "", maxMilesPerDay: "", airConditioning: "" })
+	const [image, setImage] = useState('/carImage-0.jpg')
 	const [cursor, setCursor] = useState(0)
-	const [savedInput, setSavedInput] = useLocalStorage('savedAndExitedProfile', input)
-	const [savedPosition, setSavedPosition] = useLocalStorage('formPosition', cursor)
+	const [forward, setForward] = useState(true)
+	const [savedInput, setSavedInput] = useLocalStorage('savedAndExitedCar', input)
+	const [savedPosition, setSavedPosition] = useLocalStorage('carFormPosition', cursor)
 
 	// MARK: -- animation feedback
 	const [animate, setAnimate] = useState(true)
@@ -35,12 +43,20 @@ const ProfileCreation = () => {
 		if (savedPosition && savedPosition !== 0) { setCursor(savedPosition) }
 	}, [savedInput, savedPosition])
 
+	useEffect(() => {
+		console.log(input)
+	}, [input])
+
 	// MARK: -- input change
 	const onChange = (event) => {
 		event.preventDefault()
 		if (animate) { setAnimate(false) }
 		if (error) { setError(false); setErrorMessage(''); }
 		setInput({...input, [event.target.name]: event.target.value})
+	}
+
+	const pickModel = (event) => {
+		setInput({...input, [event.target.name]: event.target.value })
 	}
 
 	const changeImage = ({ target }) => {
@@ -67,7 +83,6 @@ const ProfileCreation = () => {
 	}
 
 	const back = () => {
-		if (error) { setError(false) }
 		if (cursor > 0) setCursor(cursor - 1)
 		if (animate) { setAnimate(false) }
 	}
@@ -90,37 +105,21 @@ const ProfileCreation = () => {
 			<div className="absolute right-10 top-5 z-40 flex justify-between w-48">
 				<button className="rounded bg-gray-100 hover:bg-gray-300 px-3 py-1 text-sm font-light">Help</button>
 				<button className="rounded bg-gray-100 hover:bg-gray-300 px-3 py-1 text-sm font-light" 
-				onClick={saveAndExit}>Save and exit</button>			
+				onClick={saveAndExit}>Save and exit</button>	
 			</div>
-			<div className={info[cursor].className}>
-				<p className={animate ? textAnimate : textNoAnimate}>{info[cursor].question}</p>
-				{cursor < 3 ?
-				<>
-					<SmallInputText info={info} cursor={cursor} input={input} animate={animate} onChange={onChange} />
-					{error ?
-						<>
-							<p className="h-8 text-red-500 md:text-base text-xs absolute z-50 right-16 top-16">{errorMessage}</p>
-							<Error className="h-8 w-8 text-red-500 absolute z-50 right-5 top-14" /> 
-						</>
-					: 
-					<></>}
-				</>
-				:
-				<SmallInputImagePreview image={image} name="avatar" changeImage={changeImage} />
-				}
+			<div id="questions" className="md:w-1/2 bg-yellow-500 flex justify-center items-center">
+				<p className="text-white">{info[cursor].question}</p>
 			</div>
-			<div className="hidden md:w-1/2 md:flex md:items-center md:justify-center">
-				{cursor < 3 ?
-				<>
-					<BigInputText info={info} cursor={cursor} input={input} animate={animate} onChange={onChange} />
-				</>
-				:
-				<BigInputImagePreview image={image} name="avatar" changeImage={changeImage} />
-				}
+			<div id="answers" className="md:w-1/2 flex justify-center items-center md:my-20">
+				<div className="flex flex-col md:h-full h-96 md:w-full w-96 overflow-y-scroll">
+				{makers.map((make, index) => (
+					<button className="border rounded my-1 py-2 md:mx-20 focus:outline-none focus:border-black">{make}</button>
+				))}
+				</div>
 			</div>
 			<BottomNavForCreation info={info} cursor={cursor} back={back} next={next} submit={submit} />
 		</section>
 	)
 }
 
-export default ProfileCreation
+export default CarCreation

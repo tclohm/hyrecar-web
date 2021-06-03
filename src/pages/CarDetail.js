@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
 import Star from "../components/Star";
+import CarAmenities from "../components/CarAmenities";
 import RateList from "../components/RateList";
 
 import { GET_SINGLE_CAR } from "../graphql/queries";
@@ -55,7 +56,10 @@ const CarDetail = () => {
 							<RateList ratings={data.car.rating} />
 						</div>
 					</div>
-					<div className="h-96 md:w-96 min-w-0 bg-cover rounded" style={{ backgroundImage: "url(" + carImage + ")" }} />
+					<div className="flex flex-col">
+						<div className="h-96 md:w-96 min-w-0 bg-cover bg-center rounded" style={{ backgroundImage: "url(" + carImage + ")" }} />
+						<CarAmenities car={data.car} />
+					</div>
 				</div>
 				<div className="fixed w-full sm:bottom-0 bottom-12 bg-white p-2 border border-b-0 sm:border flex justify-between items-center sm:text-sm text-xs">
 					<div className="flex items-center ml-8">
