@@ -13,7 +13,7 @@ const info = [
         className: "md:w-1/2 md:bg-blue-200 md:flex md:items-center md:justify-center md:text-2xl", 
         progress: "absolute h-1 top-0 appearance-none bg-green-200 animate-progress-1 w-1/12",
         name: "model", 
-        question: "What's the model of your car?", 
+        question: "What's the model of your ", 
         schema: model 
     },
     { 
@@ -21,7 +21,7 @@ const info = [
         className: "md:w-1/2 md:bg-yellow-200 md:flex md:items-center md:justify-center md:mb-0 mb-44 md:text-xl", 
         progress: "absolute h-1 top-0 appearance-none bg-green-200 animate-progress-2 w-2/12",
         name: "year", 
-        question: "What's the year of your car?", 
+        question: "What's the year of your ", 
         schema: year 
     },
     { 
@@ -53,7 +53,7 @@ const info = [
         className: "md:w-1/2 md:bg-red-200 md:flex md:items-center md:justify-center md:mb-0 mb-44 md:text-xl", 
         progress: "absolute h-1 top-0 appearance-none bg-green-200 animate-progress-3 w-6/12",
         name: "amenities", 
-        question: "Does your car have air conditioning?", 
+        question: "What other features does your car have?", 
         schema: null
     },
     { 
