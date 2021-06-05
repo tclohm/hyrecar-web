@@ -18,7 +18,7 @@ const CarCreation = () => {
 	const [input, setInput] = useState({ 
 		make: "", 
 		model: "", 
-		year: "", 
+		year: 0, 
 		vin: "", 
 		ratePerDay: 55, 
 		maxMilesPerDay: 100, 
@@ -129,7 +129,6 @@ const CarCreation = () => {
 	// MARK: -- navigate questions
 	const next = async () => {
 		const obj = info[cursor]
-		console.log(obj.name)
 		if (obj.name  !== "photo" && obj.name !== "amenities") {
 			const valid = await obj.schema.validate({ [obj.name]: input[obj.name] })
 			.then(res => res)
@@ -137,7 +136,9 @@ const CarCreation = () => {
 			if (valid.name === undefined) {
 				if (input[info[cursor + 1].name] === "") { setAnimate(true) }
 				if (cursor < info.length - 1) { setCursor(cursor + 1) }
+				if (error === true) { setError(false) }
 			} else {
+				console.log("error", valid.errors[0])
 				setErrorMessage(valid.errors[0])
 				setError(true)
 			}
@@ -145,6 +146,7 @@ const CarCreation = () => {
 		else {
 			if (input[info[cursor + 1].name] === "") { setAnimate(true) }
 			if (cursor < info.length - 1) { setCursor(cursor + 1) }
+			if (error === true) { setError(false) }
 		}
 	}
 
@@ -166,15 +168,25 @@ const CarCreation = () => {
 		window.localStorage.removeItem('formPosition')
 	}
 
+	const increase = () => {
+		const el = document.getElementById('number')
+		el.value = String(Number(el.value) + 5)
+		setInput({...input, [el.name]: Number(el.value)})
+	}
+	const decrease = () => {
+		const el = document.getElementById('number')
+		el.value = String(Number(el.value) - 5)
+		setInput({...input, [el.name]: Number(el.value)})
+	}
 
 	const renderSwitchQuestion = (name) => {
 		switch (name) {
 			case "year":
-				return <p className="text-white">{info[cursor].question} {input.make} {input.model}?</p>
+				return <p className="md:text-white">{info[cursor].question} {input.make} {input.model}?</p>
 			case "model":
-				return <p className="text-white">{info[cursor].question} {input.make}?</p>
+				return <p className="md:text-white">{info[cursor].question} {input.make}?</p>
 			default:
-				return <p className="text-white">{info[cursor].question}</p>
+				return <p className="md:text-white">{info[cursor].question}</p>
 		}
 	}
 
@@ -221,25 +233,35 @@ const CarCreation = () => {
 					</div>
 			case "ratePerDay":
 				return <div className="flex justify-center items-center md:mt-0 mt-4">
-						<button className="border rounded-full h-8 w-8 mx-2">-</button>
+						<button 
+						onClick={decrease}
+						className="border rounded-full h-8 w-8 mx-2">-</button>
 						<input 
+							id="number"
 							name={info[cursor].name} 
 							value={input[info[cursor].name]}
 							type="text"
 							className="bg-gray-200 rounded p-4 md:w-1/2 focus:outline-none active:ring focus:ring focus:ring-gray-300"
 							onChange={(e) => onChange(e)} />
-						<button className="border rounded-full h-8 w-8 mx-2">+</button>
+						<button 
+						onClick={increase}
+						className="border rounded-full h-8 w-8 mx-2">+</button>
 					</div>
 			case "maxMilesPerDay":
 				return <div className="flex justify-center items-center md:mt-0 mt-4">
-						<button className="border rounded-full h-8 w-8 mx-2">-</button>
+						<button 
+						onClick={decrease}
+						className="border rounded-full h-8 w-8 mx-2">-</button>
 						<input 
+							id="number"
 							name={info[cursor].name} 
 							value={input[info[cursor].name]}
 							type="text"
 							className="bg-gray-200 rounded p-4 md:w-1/2 focus:outline-none active:ring focus:ring focus:ring-gray-300"
 							onChange={(e) => onChange(e)} />
-						<button className="border rounded-full h-8 w-8 mx-2">+</button>
+						<button 
+						onClick={increase}
+						className="border rounded-full h-8 w-8 mx-2">+</button>
 					</div>
 			case "amenities":
 				return <div className="grid grid-cols-2 md:h-full h-96 md:w-full w-96 overflow-y-scroll focus:outline-none focus:border-black" name="amenities" multiple>
@@ -284,7 +306,14 @@ const CarCreation = () => {
 				<button className="rounded bg-gray-100 hover:bg-gray-300 px-3 py-1 text-sm font-light" 
 				onClick={saveAndExit}>Save and exit</button>	
 			</div>
-			<div id="questions" className="md:w-1/2 bg-yellow-500 flex justify-center items-center">
+			{error ?
+				<>
+					<p className="h-8 text-red-500 md:text-base text-xs absolute z-50 right-16 top-16">{errorMessage}</p>
+					<Error className="h-8 w-8 text-red-500 absolute z-50 right-5 top-14" /> 
+				</>
+			: 
+			<></>}
+			<div id="questions" className={info[cursor].className}>
 				{renderSwitchQuestion(info[cursor].name)}
 			</div>
 			<div id="answers" className="md:w-1/2 flex justify-center items-center md:my-20">
