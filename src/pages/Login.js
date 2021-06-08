@@ -4,10 +4,7 @@ import schema from "../validations/AuthSchema";
 import { useFormik } from 'formik';
 import { useHistory, Link } from "react-router-dom";
 
-
-
-
-//const url = 'http://localhost:4000/login';
+const url = 'http://localhost:4000/login';
 
 const Login = () => {
 
@@ -26,8 +23,29 @@ const Login = () => {
 		},
 		validationSchema: schema,
 		onSubmit: (values) => {
-			console.log(values)
-			history.push('/')
+			const options = {
+				method: 'post',
+				credentials: 'include',
+				headers: {
+					'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
+				},
+				body: `email=${values.email}&password=${values.password}`
+			}
+
+			fetch(url, options)
+			.then(response => {
+				return response.json()
+			})
+			.then(data => {
+				if (data.success) {
+					history.push("/")
+				} else {
+					setOpen(true)
+				}
+			})
+			.catch(err => {
+				console.log(err)
+			})
 		}
 	})
 

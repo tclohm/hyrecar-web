@@ -12,7 +12,7 @@ const ProfileRoute = ({ children, ...rest }) => {
 				isAuthenticatedButProfileNotCreated() ? (
 					<>{ children }</>
 				) : (
-					<Redirect to="/profile" />
+					<Redirect to="/create/profile" />
 				)
 			}
 		></Route>

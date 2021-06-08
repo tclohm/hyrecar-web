@@ -12,7 +12,7 @@ const AuthenticatedRoute = ({ children, ...rest }) => {
 				isAuthenticatedAndProfileCreated() ? (
 					<>{ children }</>
 				) : (
-					<Redirect to="/login" />
+					<Redirect to="/signup" />
 				)
 			}
 		></Route>

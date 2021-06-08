@@ -1,4 +1,4 @@
-import { schema, firstName, lastName, license } from "../validations/ProfileSchema";
+import { firstName, lastName, license } from "../validations/ProfileSchema";
 
 const info = [
 	{ 

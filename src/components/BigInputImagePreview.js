@@ -5,7 +5,7 @@ const BigInputImagePreview = ({ image, name, changeImage }) => {
 		<div className="hidden md:flex flex-col">
 			<div className="p-8 mb-4">
 				<img 
-					className="h-48 w-48"
+					className="h-48 w-48 rounded-xl"
 					src={image} 
 					alt={name} />
 			</div>
