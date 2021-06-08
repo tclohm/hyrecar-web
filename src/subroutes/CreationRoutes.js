@@ -1,13 +1,15 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Switch } from "react-router-dom";
 import ProfileCreation from "../pages/ProfileCreation";
 import CarCreation from "../pages/CarCreation";
+import ProfileRoute from "../customroutes/ProfileRoute";
+import AuthenticatedRoute from "../customroutes/AuthenticatedRoute";
 
 const Creation = () => {
 	return(
 		<Switch>
-			<Route path="/create/profile" component={ProfileCreation} />
-			<Route path="/create/car" component={CarCreation} />
+			<ProfileRoute path="/create/profile"><ProfileCreation/></ProfileRoute>
+			<AuthenticatedRoute path="/create/car"><CarCreation/></AuthenticatedRoute>
 		</Switch>
 	)
 }

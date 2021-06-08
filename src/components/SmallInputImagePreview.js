@@ -5,7 +5,7 @@ const SmallInputImagePreview = ({ image, name, changeImage }) => {
 		<div className="md:hidden flex flex-col">
 			<div className="p-8 mb-4">
 				<img 
-					className="h-40 w-40"
+					className="h-40 w-40 rounded-xl"
 					src={image} 
 					alt={name} />
 			</div>

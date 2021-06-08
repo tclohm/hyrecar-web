@@ -1,12 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import AuthForm from "../components/AuthForm";
 import schema from "../validations/AuthSchema";
+
+import { AuthContext } from "../context/AuthContext";
+
 import { useFormik } from 'formik';
 import { useHistory, Link } from "react-router-dom";
 
-//const url = 'http://localhost:4000/signup';
+const url = 'http://localhost:4000/signup';
 
 const Signup = () => {
+
+	const { accountCreated } = useContext(AuthContext)
 
 	const history = useHistory();
 
@@ -24,7 +29,31 @@ const Signup = () => {
 		},
 		validationSchema: schema,
 		onSubmit: (values) => {
-			history.push('/create/profile')
+
+			const options = {
+				method: 'post',
+				credentials: 'include',
+				headers: {
+					'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
+				},
+				body: `email=${values.email}&password=${values.password}`
+			}
+			
+			fetch(url, options)
+				.then(response => {
+					return response.json()
+				})
+				.then(data => {
+					if (data.success) {
+						accountCreated()
+						history.push("/create/profile")
+					} else {
+						setOpen(true)
+					}
+				})
+				.catch(err => {
+					console.log(err)
+				})
 		}
 	})
 

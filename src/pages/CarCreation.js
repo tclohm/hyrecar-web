@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 
 import Toggle from "../components/Toggle";
 import Error from "../components/Error";
-import BigInputImagePreview from "../components/BigInputImagePreview";
-import SmallInputImagePreview from "../components/SmallInputImagePreview";
 import BottomNavForCreation from "../components/BottomNavForCreation";
 
 import useLocalStorage from "../hooks/useLocalStorage";

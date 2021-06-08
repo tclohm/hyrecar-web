@@ -126,3 +126,15 @@ export const PROFILE_FIELDS = gql`
 		}
 	}
 `
+
+export const PROFILE_IMAGE = gql`
+	fragment ProfileImageFields on ProfileImage {
+		id
+		image {
+			filename
+			mimetype
+			encoding
+			location
+		}
+	}
+`

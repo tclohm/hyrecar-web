@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 
 import Error from "../components/Error";
 import BigInputText from "../components/BigInputText";
@@ -6,19 +6,27 @@ import BigInputImagePreview from "../components/BigInputImagePreview";
 import SmallInputText from "../components/SmallInputText";
 import SmallInputImagePreview from "../components/SmallInputImagePreview";
 import BottomNavForCreation from "../components/BottomNavForCreation";
+
+
 import useLocalStorage from "../hooks/useLocalStorage";
-
+import { AuthContext } from "../context/AuthContext";
 import { useHistory } from "react-router-dom";
+import { ADD_PROFILE_IMAGE, ADD_PROFILE } from "../graphql/mutations";
+import { useMutation } from "@apollo/react-hooks";
 
-import info from "../data/profile"
+import info from "../data/profile";
 
 const textAnimate = "md:text-white font-black animate-fade-down"
 const textNoAnimate = "md:text-white font-black"
 
+const url = 'http://localhost:4000/'
+
 const ProfileCreation = () => {
 
-	const [input, setInput] = useState({ firstName: "", lastName:  "", license: "" })
-	const [image, setImage] = useState('/anon-0.jpg')
+	const { profileCreated } = useContext(AuthContext)
+
+	const [input, setInput] = useState({ firstName: "", lastName:  "", license: "", profileImageId: 61 })
+	const placeholder = new File(['anon-0'], 'anon-0.jpg', { type: 'image/jpeg' })
 	const [cursor, setCursor] = useState(0)
 	const [savedInput, setSavedInput] = useLocalStorage('savedAndExitedProfile', input)
 	const [savedPosition, setSavedPosition] = useLocalStorage('formPosition', cursor)
@@ -28,12 +36,23 @@ const ProfileCreation = () => {
 	const [error, setError] = useState(false)
 	const [errorMessage, setErrorMessage] = useState('')
 
+	const [imageUploaded, setImageUploaded] = useState(false)
+
+	const [addImage, image] = useMutation(ADD_PROFILE_IMAGE)
+	const [addProfile] = useMutation(ADD_PROFILE)
+
 	const history = useHistory()
 
 	useEffect(() => {
 		if (savedInput && savedInput.firstName !== "") { setInput(savedInput) }
 		if (savedPosition && savedPosition !== 0) { setCursor(savedPosition) }
 	}, [savedInput, savedPosition])
+
+	useEffect(() => {
+		if (imageUploaded && image.data) {
+			setInput({...input, profileImageId: image.data.id})
+		}
+	}, [image, imageUploaded, input])
 
 	// MARK: -- input change
 	const onChange = (event) => {
@@ -44,11 +63,9 @@ const ProfileCreation = () => {
 	}
 
 	const changeImage = ({ target }) => {
-		const reader = new FileReader()
-		reader.onload = function() {
-			setImage(reader.result)
-		}
-		reader.readAsDataURL(target.files[0])
+		const file = target.files[0]
+		addImage({ variables: { file } })
+		setImageUploaded(true)
 	}
 
 	// MARK: -- navigate questions
@@ -83,6 +100,9 @@ const ProfileCreation = () => {
 	const submit = () => {
 		window.localStorage.removeItem('savedAndExitedProfile')
 		window.localStorage.removeItem('formPosition')
+		addProfile({ variables: { profile: input } })
+		profileCreated()
+		history.push('/')
 	}
 
 	return (
@@ -106,7 +126,13 @@ const ProfileCreation = () => {
 					<></>}
 				</>
 				:
-				<SmallInputImagePreview image={image} name="avatar" changeImage={changeImage} />
+				<>
+					{ imageUploaded & image.data ?
+						<SmallInputImagePreview image={url + image.data.uploadProfileImage.location} name={image.data.uploadProfileImage.filename} changeImage={changeImage} />
+						:
+						<SmallInputImagePreview image={'/' + placeholder.name} name="avatar" changeImage={changeImage} />
+					}
+				</>
 				}
 			</div>
 			<div className="hidden md:w-1/2 md:flex md:items-center md:justify-center">
@@ -115,7 +141,13 @@ const ProfileCreation = () => {
 					<BigInputText info={info} cursor={cursor} input={input} animate={animate} onChange={onChange} />
 				</>
 				:
-				<BigInputImagePreview image={image} name="avatar" changeImage={changeImage} />
+				<>
+				{ imageUploaded & image.data ?
+						<BigInputImagePreview image={url + image.data.uploadProfileImage.location} name={image.data.uploadProfileImage.filename} changeImage={changeImage} />
+						:
+						<BigInputImagePreview image={'/' + placeholder.name} name="avatar" changeImage={changeImage} />
+				}
+				</>
 				}
 			</div>
 			<BottomNavForCreation info={info} cursor={cursor} back={back} next={next} submit={submit} />

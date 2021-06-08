@@ -28,3 +28,18 @@ export const GET_PROFILE = gql`
 	}
 	${PROFILE_FIELDS}
 `
+
+export const GET_SELF_PROFILE = gql`
+	query self {
+		self {
+			id
+			avatar {
+				id
+				image {
+					name
+					location
+				}
+			}
+		}
+	}
+`
