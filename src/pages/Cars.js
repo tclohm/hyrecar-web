@@ -8,13 +8,18 @@ import { useQuery } from "@apollo/react-hooks";
 
 const types = [
 	'ALL',
-	'MICROCAR',
-	'MINICOMPACT',
-	'SUBCOMPACT',
-	'COMPACT',
-	'MID_SIZE',
-	'FULL_SIZE',
-	'FULL_SIZE_LUXURY'
+	'SUV',
+	'TRUCH',
+	'SEDAN',
+	'VAN',
+	'COUPE',
+	'WAGON',
+	'CONVERTIBLE',
+	'SPORTS_CAR',
+	'DIESEL',
+	'CROSSOVER',
+	'LUXURY_CAR',
+	'HYBRID_ELECTRIC',
 ]
 
 const Cars = () => {

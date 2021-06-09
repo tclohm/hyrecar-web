@@ -1,4 +1,4 @@
-import { make, model, year, vin, ratePerDay, maxMilesPerDay } from "../validations/CarSchema"
+import { make, model, carType, year, vin, ratePerDay, maxMilesPerDay } from "../validations/CarSchema"
 const info = [
     { 
         id: 0, 
@@ -16,6 +16,14 @@ const info = [
         name: "model", 
         question: "What's the model of your ", 
         schema: model 
+    },
+    {
+        id: 24, 
+        className: "md:w-1/2 flex justify-center items-center md:bg-pink-900 md:text-xl", 
+        progress: "absolute h-1 top-0 appearance-none bg-green-200 animate-progress-2 w-2/12",
+        name: "type", 
+        question: "What type of ca", 
+        schema: carType 
     },
     { 
         id: 24, 

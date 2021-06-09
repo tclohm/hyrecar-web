@@ -1,11 +1,15 @@
 import * as yup from "yup";
 
 export const make = yup.object().shape({
-	make: yup.string('The car\'s maker').min(1, 'Please pick a make').max(30, 'Must be less than 30 characters').required('The make of the car is required')
+	make: yup.string('The car\'s maker').min(1, 'Please pick a make').required('The make of the car is required')
 })
 
 export const model = yup.object().shape({
-	model: yup.string('The car model').min(1, 'Please pick a model').max(50, 'Must less than 50 characters').required('The model of the car is required')
+	model: yup.string('The car model').min(1, 'Please pick a model').required('The model of the car is required')
+})
+
+export const carType = yup.object().shape({
+	model: yup.string('The car type').min(1, 'Please pick a car type').required('The car type is required')
 })
 
 export const year = yup.object().shape({
