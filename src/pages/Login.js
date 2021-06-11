@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import AuthForm from "../components/AuthForm";
 import schema from "../validations/AuthSchema";
+import { AuthContext } from "../context/AuthContext";
 import { useFormik } from 'formik';
 import { useHistory, Link } from "react-router-dom";
 
 const url = 'http://localhost:4000/login';
 
 const Login = () => {
+
+	const { accountLoggedIn } = useContext(AuthContext)
 
 	const history = useHistory();
 
@@ -38,6 +41,7 @@ const Login = () => {
 			})
 			.then(data => {
 				if (data.success) {
+					accountLoggedIn()
 					history.push("/")
 				} else {
 					setOpen(true)

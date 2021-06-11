@@ -20,7 +20,7 @@ const Header = ({ show, close, self }) => {
 						placeholder="search"
 					/>
 					<nav className="relative flex">
-						<Link className="px-2 text-gray-400 font-light align-items hover:bg-gray-300 rounded focus:outline-none" to="/create/car">Rent your car</Link>
+						<Link className="px-2 text-gray-400 font-light align-items hover:bg-gray-300 rounded focus:outline-none flex items-center" to="/create/car">Rent your car</Link>
 						<button className="mr-10 ml-4 focus:outline-none rounded-full" onClick={show}>
 							<Anon className="h-8 w-8 text-gray-400 stroke-current" />
 						</button>

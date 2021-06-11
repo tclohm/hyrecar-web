@@ -11,7 +11,7 @@ const url = 'http://localhost:4000/signup';
 
 const Signup = () => {
 
-	const { accountCreated } = useContext(AuthContext)
+	const { accountLoggedIn } = useContext(AuthContext)
 
 	const history = useHistory();
 
@@ -45,7 +45,7 @@ const Signup = () => {
 				})
 				.then(data => {
 					if (data.success) {
-						accountCreated()
+						accountLoggedIn()
 						history.push("/create/profile")
 					} else {
 						setOpen(true)

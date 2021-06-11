@@ -5,7 +5,7 @@ const ProfileSettingsLogout = () => {
 
   return (
     <div className="fixed right-8 top-14 z-50 flex flex-col bg-white w-52 rounded-xl shadow border">
-      <Link className="hover:bg-gray-100 py-3 px-4 rounded-t-xl" to="/">
+      <Link className="hover:bg-gray-100 py-3 px-4 rounded-t-xl" to="/profile">
         Profile
       </Link>
       <Link className="hover:bg-gray-100 py-3 px-4" to="/account/settings">

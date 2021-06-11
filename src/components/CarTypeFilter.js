@@ -11,8 +11,8 @@ const CarTypeFilter = ({ types, setType, selected, show, close, open, filter, se
 		switch(type) {
 			case 'SUV':
 				return 'SUV'
-			case 'TRUCH':
-				return 'Truch'
+			case 'TRUCK':
+				return 'Truck'
 			case'SEDAN':
 				return 'Sedan'
 			case 'VAN':

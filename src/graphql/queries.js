@@ -29,7 +29,7 @@ export const GET_PROFILE = gql`
 	${PROFILE_FIELDS}
 `
 
-export const GET_SELF_PROFILE = gql`
+export const GET_SELF_IMAGE = gql`
 	query self {
 		self {
 			id
@@ -42,4 +42,13 @@ export const GET_SELF_PROFILE = gql`
 			}
 		}
 	}
+`
+
+export const GET_SELF_PROFILE = gql`
+query self {
+		self {
+			...ProfileDetailFields
+			}
+	}
+	${PROFILE_FIELDS}
 `
