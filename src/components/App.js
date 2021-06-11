@@ -1,6 +1,7 @@
 import React, { Fragment, useState, useContext } from "react";
 
-import Header from "./Header";
+import UnAuthedHeader from "./UnAuthedHeader";
+import AuthedHeader from "./AuthedHeader";
 import SigninSignup from "./SignInSignUp";
 import BottomNavBar from "./BottomNavBar";
 import Cars from "../pages/Cars";
@@ -18,16 +19,11 @@ import AuthenticatedRoute from "../customroutes/AuthenticatedRoute";
 
 import { AuthContext } from "../context/AuthContext";
 
-import { useQuery } from "@apollo/react-hooks";
-import { GET_SELF_PROFILE } from "../graphql/queries";
-
 function App() {
 
   const [open, setOpen] = useState(false)
 
   const { isAuthenticated } = useContext(AuthContext)
-
-  const { data, loading } = useQuery(GET_SELF_PROFILE)
 
   const show = (e) => {
     e.stopPropagation()
@@ -64,30 +60,15 @@ function App() {
     }
   }
 
-  if (loading) {
-    return (
-      <Fragment>
-        <Header show={(e) => show(e)} close={(e) => close(e)} self={null} />
-        <div onClick={(e) => close(e)}>
-          {renderMenu(isAuthenticated())}
-          <Switch> 
-              <Route exact path="/"><Cars /></Route>
-              <Route path="/users/show/:id"><Profile /></Route>
-              <Route path="/signup"><Signup /></Route>
-              <Route path="/login"><Login /></Route>
-              <AuthenticatedRoute path="/profile"><UserProfile /></AuthenticatedRoute>
-              <Route path="/car/:id"><CarDetail /></Route>
-          </Switch>
-          <BottomNavBar />
-        </div>
-     </Fragment>
-     )
-   }
 
-  if (data) {
     return (
       <Fragment>
-        <Header show={(e) => show(e)} close={(e) => close(e)} self={data.self} />
+        {
+          isAuthenticated() ?
+              <AuthedHeader show={(e) => show(e)} close={(e) => close(e)} />
+            :
+              <UnAuthedHeader show={(e) => show(e)} close={(e) => close(e)} />
+        }
         <div onClick={(e) => close(e)}>
           {renderMenu(isAuthenticated())}
           <Switch> 
@@ -102,7 +83,6 @@ function App() {
         </div>
       </Fragment>
   );
-  }
 }
 
 export default App;

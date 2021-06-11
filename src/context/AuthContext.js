@@ -32,7 +32,12 @@ export const AuthProvider = ({ children }) => {
 
 		const url = 'http://localhost:4000/logout';
 
-		fetch(url).then(response => response.json())
+		let options = {
+			method: 'get',
+			credentials: 'include'
+		}
+
+		fetch(url, options).then(response => response.json())
 				  .then(data => {
 				  	if (data.success) {
 				  		history.push("/")
