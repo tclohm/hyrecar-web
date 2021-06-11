@@ -6,6 +6,7 @@ import BottomNavForCreation from "../components/BottomNavForCreation";
 
 import useLocalStorage from "../hooks/useLocalStorage";
 import info from "../data/cars";
+import { types, transform } from "../data/types";
 import years from "../data/years";
 import amenities from "../data/amenities";
 
@@ -15,7 +16,8 @@ const CarCreation = () => {
 
 	const [input, setInput] = useState({ 
 		make: "", 
-		model: "", 
+		model: "",
+		type: "", 
 		year: 0, 
 		vin: "", 
 		ratePerDay: 55, 
@@ -171,6 +173,7 @@ const CarCreation = () => {
 		el.value = String(Number(el.value) + 5)
 		setInput({...input, [el.name]: Number(el.value)})
 	}
+
 	const decrease = () => {
 		const el = document.getElementById('number')
 		el.value = String(Number(el.value) - 5)
@@ -213,6 +216,19 @@ const CarCreation = () => {
 								onClick={(e) => pick(e)}
 								className="border rounded my-1 py-2 md:mx-20 focus:outline-none focus:border-black">
 							{model}
+							</button>
+						))}
+					</div>
+			case "type":
+				return <div className="flex flex-col md:h-full h-96 md:w-full w-96 overflow-y-scroll">
+						{types.map((type, index) => (
+							<button 
+								key={index} 
+								name="type"
+								value={type}
+								onClick={(e) => pick(e)}
+								className="border rounded my-1 py-2 md:mx-20 focus:outline-none focus:border-black">
+							{transform(type)}
 							</button>
 						))}
 					</div>

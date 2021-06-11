@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 
 import Error from "../components/Error";
 import BigInputText from "../components/BigInputText";
@@ -9,7 +9,6 @@ import BottomNavForCreation from "../components/BottomNavForCreation";
 
 
 import useLocalStorage from "../hooks/useLocalStorage";
-import { AuthContext } from "../context/AuthContext";
 import { useHistory } from "react-router-dom";
 import { ADD_PROFILE_IMAGE, ADD_PROFILE } from "../graphql/mutations";
 import { useMutation } from "@apollo/react-hooks";
@@ -22,8 +21,6 @@ const textNoAnimate = "md:text-white font-black"
 const url = 'http://localhost:4000/'
 
 const ProfileCreation = () => {
-
-	const { profileCreated } = useContext(AuthContext)
 
 	const [input, setInput] = useState({ firstName: "", lastName:  "", license: "", profileImageId: 61 })
 	const placeholder = new File(['anon-0'], 'anon-0.jpg', { type: 'image/jpeg' })
@@ -101,7 +98,6 @@ const ProfileCreation = () => {
 		window.localStorage.removeItem('savedAndExitedProfile')
 		window.localStorage.removeItem('formPosition')
 		addProfile({ variables: { profile: input } })
-		profileCreated()
 		history.push('/')
 	}
 

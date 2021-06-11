@@ -4,12 +4,12 @@ import { Route, Redirect } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
 const AuthenticatedRoute = ({ children, ...rest }) => {
-	const { isAuthenticatedAndProfileCreated } = useContext(AuthContext);
+	const { isAuthenticated } = useContext(AuthContext);
 	return (
 		<Route
 			{...rest}
 			render={() => 
-				isAuthenticatedAndProfileCreated() ? (
+				isAuthenticated() ? (
 					<>{ children }</>
 				) : (
 					<Redirect to="/signup" />
