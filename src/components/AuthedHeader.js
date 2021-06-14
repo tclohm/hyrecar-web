@@ -2,20 +2,16 @@ import React from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { GET_SELF_IMAGE } from "../graphql/queries";
 import { Link } from "react-router-dom";
-import UnAuthedHeader from "./UnAuthedHeader";
-
 
 const AuthedHeader = ({ show, close }) => {
 
   	const { data, loading, error } = useQuery(GET_SELF_IMAGE)
 
-	if (loading) {
-		<UnAuthedHeader show={(e) => show(e)} close={(e) => close(e)} />
-	}
+	if (loading) return <p>loading</p>
 
 	if (error) return <p>Error</p>
 
-	if (data && data.self !== null) {
+	if (data && data.self) {
 		const baseUrl = "http://localhost:4000"
 		const profileImage = baseUrl + data.self.avatar.image.location
 		return (

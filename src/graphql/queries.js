@@ -33,6 +33,7 @@ export const GET_SELF_IMAGE = gql`
 	query self {
 		self {
 			id
+			firstName
 			avatar {
 				id
 				image {
@@ -45,10 +46,22 @@ export const GET_SELF_IMAGE = gql`
 `
 
 export const GET_SELF_PROFILE = gql`
-query self {
+	query self {
 		self {
 			...ProfileDetailFields
 			}
 	}
 	${PROFILE_FIELDS}
+`
+
+export const GET_USER_PASSWORD = gql`
+	query self {
+		self {
+			id
+			user {
+				id
+				password
+			}
+		}
+	}
 `
