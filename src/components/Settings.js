@@ -3,10 +3,11 @@ import React from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { GET_SELF_IMAGE } from "../graphql/queries";
 
-import { Link } from "react-router-dom";
+import MenuLink from "./MenuLink";
 
 
 const Settings = ({ children, title, description }) => {
+
 	const { data, loading, error } = useQuery(GET_SELF_IMAGE)
 
 	if (loading) {
@@ -20,9 +21,9 @@ const Settings = ({ children, title, description }) => {
 		const profileImage = baseUrl + data.self.avatar.image.location
 
 		return (
-			<section className="flex">
-				<div className="flex flex-col w-5/12 mt-12 ml-12">
-					<div className="flex mb-12">
+			<section className="relative w-full mb-20">
+				<div className="flex lg:flex-col lg:w-4/12 mx-4 mt-8">
+					<div className="flex">
 						<div className="h-12 w-12 bg-cover bg-center rounded-full" style={{ backgroundImage: "url(" + profileImage + ")" }}/>
 						<div className="flex flex-col ml-4">
 							<div className="flex">
@@ -33,14 +34,16 @@ const Settings = ({ children, title, description }) => {
 							<p className="text-gray-500 text-sm">{description}</p>
 						</div>
 					</div>
-					<div className="flex flex-col justify-around h-20 w-1/2">
-						<Link className="bg-gray-200" to="/account">Account Settings</Link>
-						<Link className="bg-gray-200" to="/account/profile">Edit Profile</Link>
-						<Link className="bg-gray-200" to="/account/password">Password</Link>
-					</div>
 				</div>
-				<div className="w-full mr-8">
+				<div className="flex flex-col">
+					<div className="flex justify-around items-center lg:flex-col lg:justify-start lg:items-start h-20">
+						<MenuLink to="/account" label="Account Settings" active={true} />
+						<MenuLink to="/account/profile" label="Edit Profile" />
+						<MenuLink to="/account/password" label="Password" />
+					</div>
+					<div className="lg:w-6/12 mx-4">
 					{ children }
+					</div>
 				</div>
 			</section>
 		)

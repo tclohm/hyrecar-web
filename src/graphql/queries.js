@@ -34,6 +34,8 @@ export const GET_SELF_IMAGE = gql`
 		self {
 			id
 			firstName
+			lastName
+			license
 			avatar {
 				id
 				image {
