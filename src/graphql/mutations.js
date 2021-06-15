@@ -18,3 +18,20 @@ export const ADD_PROFILE = gql`
 		}
 	}
 `
+
+export const UPDATE_PROFILE = gql`
+	mutation UpdateProfile($profile: ProfileInput!) {
+		updateProfile(profile: $profile) {
+			id
+			firstName
+			lastName
+			avatar {
+				id
+				image {
+					name
+					location
+				}
+			}
+		}
+	}
+`

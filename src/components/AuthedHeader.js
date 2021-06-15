@@ -1,4 +1,5 @@
 import React from "react";
+import UnAuthedHeader from "./UnAuthedHeader";
 import { useQuery } from "@apollo/react-hooks";
 import { GET_SELF_IMAGE } from "../graphql/queries";
 import { Link } from "react-router-dom";
@@ -7,7 +8,7 @@ const AuthedHeader = ({ show, close }) => {
 
   	const { data, loading, error } = useQuery(GET_SELF_IMAGE)
 
-	if (loading) return <p>loading</p>
+	if (loading) return <UnAuthedHeader show={show} close={close} />
 
 	if (error) return <p>Error</p>
 
