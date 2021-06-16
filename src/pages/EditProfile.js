@@ -23,6 +23,18 @@ const EditProfile = () => {
 	const [updated, setUpdated] = useState(false)
 	const [err, setErr] = useState(false)
 
+	const show = (e) => {
+		const fileinput = document.getElementById('profileImageUpdate')
+		const container = document.getElementById('avatarBtnContainer')
+		const avatarInfo = document.getElementById('avatarInfo')
+		e.target.classList.add('hidden')
+		fileinput.classList.remove('hidden')
+		avatarInfo.classList.remove('hidden')
+		fileinput.classList.add('my-2')
+		container.classList.remove('items-center')
+		container.classList.add('items-start', 'flex-col-reverse')
+	}
+
 	const formik = useFormik({
 		initialValues: input,
 		validationSchema: schema,
@@ -50,12 +62,23 @@ const EditProfile = () => {
 	return (
 			<section>
 			<form onSubmit={formik.handleSubmit} className="relative flex flex-col">
-				<div className="flex justify-center m-6">
+				<div className="flex justify-center items-center m-1">
 					<div className="h-24 w-24 bg-cover bg-center rounded-full" style={{ backgroundImage: "url(" + profileImage + ")" }}/>
-					<div className="flex items-center">
-							<button className="bg-pink-400 focus:ring focus:ring-pink-200 focus:outline-none font-semibold text-sm text-white py-3 px-4 rounded-xl mx-2">Upload new picture
+					<div id="avatarBtnContainer" className="flex items-center mx-4">
+						<div className="flex items-center">
+							<button 
+							onClick={(e) => show(e)}
+							className="bg-pink-400 focus:ring focus:ring-pink-200 focus:outline-none font-semibold text-sm text-white py-3 px-4 rounded-xl mx-2">
+								Upload new picture
 							</button>
-						<button className="bg-gray-200 focus:ring focus:ring-gray-100 focus:outline-none font-semibold text-sm py-3 px-4 rounded-xl">Delete</button>
+							<div>
+								<input id="profileImageUpdate" type="file" name="file" className="hidden" accept="image/png, image/jpeg"  />
+								<p id="avatarInfo" className="text-gray-400 text-sm hidden">JPG or PNG. Max size of 800K</p>
+							</div>
+						</div>
+						<button className="bg-gray-200 focus:ring focus:ring-gray-100 focus:outline-none font-semibold text-sm py-3 px-4 rounded-xl">
+							Delete
+						</button>
 					</div>
 				</div>
 					<div className="relative flex flex-col">
