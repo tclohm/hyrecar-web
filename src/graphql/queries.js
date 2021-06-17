@@ -67,3 +67,16 @@ export const GET_USER_PASSWORD = gql`
 		}
 	}
 `
+
+
+export const GET_USER_EMAIL = gql`
+	query self {
+		self {
+			id
+			user {
+				id
+				email
+			}
+		}
+	}
+`
