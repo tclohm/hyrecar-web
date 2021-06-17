@@ -13,7 +13,7 @@ const Account = () => {
 	const { data, loading, error } = useQuery(GET_USER_EMAIL)
 
 	const [input, setInput] = useState({ 
-		email: data.self.user.email || "", 
+		email: data ? data.self.user.email : "", 
 	})
 
 	const formik = useFormik({
@@ -26,22 +26,22 @@ const Account = () => {
 
 	if (loading) return <p>loading</p>
 	if (error) return <p>error</p>
-	if (data)
-
-
-	return (
-		<section className="flex flex-col">
-			<label className="text-gray-400 text-sm">Email <span className="text-red-600">*</span></label>
-			<input 
-				type="text"
-				name="email" 
-				onChange={formik.handleChange} 
-				value={formik.values.email}
-				className="bg-gray-200 rounded p-4 focus:outline-none active:ring focus:ring focus:ring-gray-300 my-2"
-			/>
-			<button className="bg-pink-400 font-semibold text-white p-2 rounded">Save Changes</button>
-		</section>
-	)
+	if (data) {
+		console.log(data)
+		return (
+			<section className="flex flex-col">
+				<label className="text-gray-400 text-sm">Email <span className="text-red-600">*</span></label>
+				<input 
+					type="text"
+					name="email" 
+					onChange={formik.handleChange} 
+					value={formik.values.email}
+					className="bg-gray-200 rounded p-4 focus:outline-none active:ring focus:ring focus:ring-gray-300 my-2"
+				/>
+				<button className="bg-pink-400 font-semibold text-white p-2 rounded">Save Changes</button>
+			</section>
+		)
+	}
 }
 
 export default Account
