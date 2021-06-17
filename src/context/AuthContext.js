@@ -1,19 +1,17 @@
-import React, { createContext } from "react";
+import React, { createContext, useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-//import { GET_USER_PROFILE } from "../graphql/queries";
-//import { useQuery } from "@apollo/react-hooks";
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
 
 	const history = useHistory()
-
+	
 	const isAuthenticated = () => {
-			if (document.cookie === "signedin=true") {
-				return true
-			}
-			return false;
+		if (document.cookie === "signedin=true") {
+			return true
+		} 
+		return false
 	}
 
 	const accountLoggedIn = () => {

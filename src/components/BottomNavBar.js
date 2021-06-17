@@ -21,7 +21,7 @@ const BottomNavBar = () => {
 							</nav>
 							) : (
 							<nav>
-								<MenuLink to="/login" label="Sign in" />
+								<MenuLink to="/login" label="Sign in" style={{ margin: "0 1rem 0 1rem" }} />
 								<Link className="mr-4 bg-yellow-300 text-white font-medium px-4 py-3 rounded" to="/signup">Sign up</Link>
 							</nav>
 						)

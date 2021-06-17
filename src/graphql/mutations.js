@@ -25,6 +25,7 @@ export const UPDATE_PROFILE = gql`
 			id
 			firstName
 			lastName
+			license
 			avatar {
 				id
 				image {
@@ -32,6 +33,16 @@ export const UPDATE_PROFILE = gql`
 					location
 				}
 			}
+		}
+	}
+`
+
+export const UPDATE_EMAIL = gql`
+	mutation UpdateUser($user: UserInput!) {
+		updateUser(user: $user) {
+			id
+			email
+			password
 		}
 	}
 `
