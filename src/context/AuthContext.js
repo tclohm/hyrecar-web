@@ -1,4 +1,5 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext } from "react";
+import Cookies from "js-cookie";
 import { useHistory } from "react-router-dom";
 
 export const AuthContext = createContext();
@@ -8,7 +9,7 @@ export const AuthProvider = ({ children }) => {
 	const history = useHistory()
 	
 	const isAuthenticated = () => {
-		if (document.cookie === "signedin=true") {
+		if (Cookies.get("signedin")) {
 			return true
 		} 
 		return false
@@ -24,7 +25,6 @@ export const AuthProvider = ({ children }) => {
 
 	const logout = () => {
 		if (document.cookie === "signedin=true") {
-			console.log("deleted cookie")
 			document.cookie = 'signedin=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT; Max-Age=0;';
 		}
 

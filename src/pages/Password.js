@@ -1,10 +1,13 @@
 import React, { useState } from "react";
-import { useQuery } from "@apollo/react-hooks";
-import { GET_USER_PASSWORD } from "../graphql/queries"
+import { useQuery, useMutation } from "@apollo/react-hooks";
+import { GET_USER } from "../graphql/queries";
+import { UPDATE_USER } from "../graphql/mutations";
 
 const Password = () => {
 
-	const { data, loading, error } = useQuery(GET_USER_PASSWORD)
+	const { data, loading, error } = useQuery(GET_USER)
+
+	const [updateUser] = useMutation(UPDATE_USER)
 
 	const [input, setInput] = useState({ password: "" })
 
@@ -33,6 +36,7 @@ const Password = () => {
 				type="password"
 				name="password"
 				value={input.password}
+				onChange={(e) => onChange(e)}
 				className="bg-gray-200 rounded p-4 focus:outline-none active:ring focus:ring focus:ring-gray-300 my-2"
 			/>
 			<button className="bg-pink-400 font-semibold text-white p-2 rounded">Change</button>

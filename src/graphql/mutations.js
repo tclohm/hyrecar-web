@@ -37,7 +37,7 @@ export const UPDATE_PROFILE = gql`
 	}
 `
 
-export const UPDATE_EMAIL = gql`
+export const UPDATE_USER = gql`
 	mutation UpdateUser($user: UserInput!) {
 		updateUser(user: $user) {
 			id
