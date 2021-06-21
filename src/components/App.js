@@ -13,7 +13,6 @@ import CarDetail from "../pages/CarDetail";
 import Signup from "../pages/Signup";
 import Login from "../pages/Login";
 import Profile from "../pages/Profile";
-import UserProfile from "../pages/UserProfile";
 import Account from "../pages/Account";
 import EditProfile from "../pages/EditProfile";
 import Password from "../pages/Password";

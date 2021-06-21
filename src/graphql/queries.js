@@ -56,26 +56,14 @@ export const GET_SELF_PROFILE = gql`
 	${PROFILE_FIELDS}
 `
 
-export const GET_USER_PASSWORD = gql`
-	query self {
-		self {
-			id
-			user {
-				id
-				password
-			}
-		}
-	}
-`
-
-
-export const GET_USER_EMAIL = gql`
+export const GET_USER = gql`
 	query self {
 		self {
 			id
 			user {
 				id
 				email
+				password
 			}
 		}
 	}
