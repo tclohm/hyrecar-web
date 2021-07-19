@@ -9,7 +9,7 @@ export const model = yup.object().shape({
 })
 
 export const carType = yup.object().shape({
-	model: yup.string('The car type').min(1, 'Please pick a car type').required('The car type is required')
+	type: yup.string('The car type').min(1, 'Please pick a car type').required('The car type is required')
 })
 
 export const year = yup.object().shape({
