@@ -67,7 +67,10 @@ const CarCreation = () => {
 				.then(data => {
 					if (data && data.Results) {
 						const name = data.Results.map(obj => {
-							return obj.MakeName.trim().toLowerCase().replace(/\w\S*/g, (w) => (w.replace(/^\w/, (c) => c.toUpperCase())));
+							return obj.MakeName
+									  .trim()
+									  .toLowerCase()
+									  .replace(/\w\S*/g, (w) => (w.replace(/^\w/, (c) => c.toUpperCase())));
 						})
 						setMakes(name)
 					}
@@ -130,6 +133,7 @@ const CarCreation = () => {
 	const next = async () => {
 		const obj = info[cursor]
 		if (obj.name  !== "photo" && obj.name !== "amenities") {
+			console.log(obj.name, input[obj.name])
 			const valid = await obj.schema.validate({ [obj.name]: input[obj.name] })
 			.then(res => res)
 			.catch(err => err)
@@ -222,14 +226,17 @@ const CarCreation = () => {
 			case "type":
 				return <div className="flex flex-col md:h-full h-96 md:w-full w-96 overflow-y-scroll">
 						{types.map((type, index) => (
-							<button 
-								key={index} 
-								name="type"
-								value={type}
-								onClick={(e) => pick(e)}
-								className="border rounded my-1 py-2 md:mx-20 focus:outline-none focus:border-black">
-							{transform(type)}
-							</button>
+							type !== "ALL" ?
+								<button 
+									key={index} 
+									name="type"
+									value={type}
+									onClick={(e) => pick(e)}
+									className="border rounded my-1 py-2 md:mx-20 focus:outline-none focus:border-black">
+								{transform(type)}
+								</button>
+								:
+								<></>	
 						))}
 					</div>
 			case "year":
