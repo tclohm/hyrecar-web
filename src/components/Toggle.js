@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
-const Toggle = ({ name, toggle, children }) => {
-	const [active, setActive] = useState(false)
+const Toggle = ({ name, toggle, children, isActive }) => {
+	const [active, setActive] = useState(isActive ? true : false)
 
 	return (
 			<button

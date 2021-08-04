@@ -291,6 +291,7 @@ const CarCreation = () => {
 								key={index} 
 								name={Object.values(object)[0]}
 								toggle={toggle}
+								isActive={input[Object.values(object)[0]]}
 							>
 							{Object.keys(object)[0]}
 							</Toggle>
