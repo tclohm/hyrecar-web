@@ -200,6 +200,16 @@ const CarCreation = () => {
 			case "make":
 				return <div className="flex flex-col md:h-full h-96 md:w-full w-96 overflow-y-scroll">
 						{makes.map((make, index) => (
+							input.make === make ?
+							<button 
+								key={index} 
+								name="make"
+								value={make}
+								onClick={(e) => pick(e)}
+								className="border rounded my-1 py-2 md:mx-20 focus:outline-none border-black">
+							{make}
+							</button>
+							:
 							<button 
 								key={index} 
 								name="make"
@@ -213,6 +223,16 @@ const CarCreation = () => {
 			case "model":
 				return <div className="flex flex-col md:h-full h-96 md:w-full w-96 overflow-y-scroll">
 						{models.map((model, index) => (
+							input.model === model ?
+							<button 
+								key={index} 
+								name="model"
+								value={model}
+								onClick={(e) => pick(e)}
+								className="border rounded my-1 py-2 md:mx-20 focus:outline-none border-black">
+							{model}
+							</button>
+							:
 							<button 
 								key={index} 
 								name="model"
@@ -227,6 +247,16 @@ const CarCreation = () => {
 				return <div className="flex flex-col md:h-full h-96 md:w-full w-96 overflow-y-scroll">
 						{types.map((type, index) => (
 							type !== "ALL" ?
+								input.type === type ?
+									<button 
+									key={index} 
+									name="type"
+									value={type}
+									onClick={(e) => pick(e)}
+									className="border rounded my-1 py-2 md:mx-20 focus:outline-none border-black">
+								{transform(type)}
+								</button>
+							:
 								<button 
 									key={index} 
 									name="type"
@@ -242,6 +272,16 @@ const CarCreation = () => {
 			case "year":
 				return <div className="flex flex-col md:h-full h-96 md:w-full w-96 overflow-y-scroll">
 						{years.map((year, index) => (
+							input.year === year ?
+							<button 
+								key={index} 
+								name="year"
+								value={year}
+								onClick={(e) => pick(e)}
+								className="border rounded my-1 py-2 md:mx-20 focus:outline-none border-black">
+							{year}
+							</button>
+							:
 							<button 
 								key={index} 
 								name="year"
